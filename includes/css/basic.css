@@ -1,0 +1,39 @@
+.mini-container {
+    margin: 5px;
+    padding: 5px 15px;
+    background-color: rgba(220,220,220,0.2);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font-size: small;
+    text-align: center;
+    color: gray;
+}
+
+a:hover > .mini-container {
+    background-color: rgba(150,150,150,0.2);
+    text-decoration: none !important;
+}
+
+a:hover > .mini-container h5 {
+    text-decoration: none !important;
+}
+
+.footer-omv {
+    padding: 10px 15px;
+    background-color: #10069f;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    color: white;
+}
+
+.footer-omv a {
+    color: white;
+}
+
+.version-notes {
+    background-color: #fff;
+    font-size: small;
+    text-align: center;
+}
