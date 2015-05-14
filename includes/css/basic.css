@@ -1,3 +1,7 @@
+/*
+ * Basic CSS - Interfaz b‡sica para OMV
+ */
+
 .mini-container {
     margin: 5px;
     padding: 5px 15px;
@@ -21,7 +25,7 @@ a:hover > .mini-container h5 {
 
 .footer-omv {
     padding: 10px 15px;
-    background-color: #10069f;
+    background-color: #2F2087;
     border-top: 1px solid #ddd;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -30,6 +34,10 @@ a:hover > .mini-container h5 {
 
 .footer-omv a {
     color: white;
+}
+
+.footer-omv ul {
+    list-style-type: none;
 }
 
 .version-notes {

@@ -90,4 +90,4 @@ define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 | Platform Versioning
 |--------------------------------------------------------------------------
  */
-define('PLATFORM_VERSION', "1.0");
+define('PLATFORM_VERSION', "07d889972d");
