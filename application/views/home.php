@@ -31,8 +31,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <ul class="nav navbar-nav">
                             <li  class="active">
                                 <a href="#">Inicio</a>
-                            </li>
+                            </li>                            
                         </ul>
+                        <?php if ($this->ion_auth->logged_in()) {echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('home/logout').'">Salir</a></li></ul>';} ?>
                     </div>
                 </div>
             </nav>
@@ -48,9 +49,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     educativas solicitar orientación y asistencia ante casos dudosos o difíciles.</p>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6" >
+			    <?php 
+                            if (!$this->ion_auth->logged_in()){ //validamos que esl usuario este logeado
 			    
-			    <?php echo form_open("auth/login");?>
-			    <?php /*
+                                echo form_open("home/login");
+			    /*
 				if ($message) {
 				  echo "<div id='infoMessage' class='alert alert-danger alert-dismissible' role='alert'>";
 				  echo "<button type='button' class='close' data-dismiss='alert'>";
@@ -65,8 +68,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required><br />
 				
 				<div class="text-right"><button type="submit" class="btn btn-lg btn-primary">Ingresar</button></div>
-			    <?php echo form_close();?>
+			    <?php echo form_close();
+                            }
+                            else 
+                            {   
+                                $usr = $this->ion_auth->user()->row();	// capturamos los datos del user			 
+                                echo'Bienvenido '.$usr->first_name; // mostramos el nombre
+                                
+                                /*
+                                $this->load->view('menu/menu_view');
+                                
+                                 * $this->load->view('layout/footer');
+                                
+                                */
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
             </div>
+            <?php
+echo "<h2>".$this->session->flashdata('message')."</h2>";
+?>

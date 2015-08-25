@@ -23,13 +23,9 @@
                     </li>
                     <li>
                         <a href="#">Recursos</a>
-                    </li>
+                    </li>               
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#">Salir</a>
-                    </li>
-                </ul>
+                        <?php if ($this->ion_auth->logged_in()) {echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('home/logout').'">Salir</a></li></ul>';} ?>
             </div>
     	</div>
     </nav>

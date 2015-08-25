@@ -21,6 +21,7 @@ $lang['profiler_no_profiles']	= 'No hay datos de perfil - se desabilitan todas l
 $lang['profiler_session_data']	= 'DATOS DE SESIÓN';
 $lang['profiler_section_hide']	= 'Ocultar';
 $lang['profiler_section_show']	= 'Mostrar';
+$lang['profiler_seconds'] 	  	 = 'Segundos';
 
 /* End of file profiler_lang.php */
 /* Location: ./system/language/spanish/profiler_lang.php */

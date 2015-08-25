@@ -1,4 +1,5 @@
 <?php
+ date_default_timezone_set('America/Bogota');//establecemos la hora para los logs
 /**
  * CodeIgniter
  *

@@ -8,8 +8,8 @@ class Menu extends CI_Controller {
     **/
     function __construct() {
        parent::__construct();
-       //$this->output->enable_profiler(TRUE); //profiler para el seguimiento del performance                               
-       $this->load->helper('url');
+       $this->output->enable_profiler(TRUE); //profiler para el seguimiento del performance                               
+       //$this->load->helper('url');
        //$this->load->library('ion_auth');
        //$this->load->model('model');
 
