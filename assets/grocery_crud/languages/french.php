@@ -76,9 +76,4 @@
 	$lang['minimize_maximize'] = 'Réduire/Agrandir';
 
 	/* Added in version 1.4 */
-	$lang['list_view'] = 'Voir';
-
-	/* Added in version 1.5.1 */
-	$lang['ui_day'] = 'jj';
-	$lang['ui_month'] = 'mm';
-	$lang['ui_year'] = 'aaaa';
+	$lang['list_view'] = 'View';
