@@ -21,3 +21,11 @@ ERROR - 2015-08-26 09:50:50 --> Severity: Notice --> Use of undefined constant r
 ERROR - 2015-08-26 09:50:55 --> Severity: Notice --> Use of undefined constant refresh - assumed 'refresh' C:\wamp\www\omv\application\controllers\Patients.php 39
 ERROR - 2015-08-26 09:51:00 --> ACR Home/index OK
 ERROR - 2015-08-26 09:51:11 --> ACR Home/index OK
+ERROR - 2015-08-26 11:37:35 --> ACR Home/index OK
+ERROR - 2015-08-26 11:37:38 --> Severity: Notice --> Use of undefined constant refresh - assumed 'refresh' C:\wamp\www\omv\application\controllers\Patients.php 39
+ERROR - 2015-08-26 11:37:41 --> ACR Home/index OK
+ERROR - 2015-08-26 11:41:55 --> ACR Home/index OK
+ERROR - 2015-08-26 15:31:55 --> ACR Home/index OK
+ERROR - 2015-08-26 15:31:58 --> ACR Home/index OK
+ERROR - 2015-08-26 15:33:40 --> ACR Home/index OK
+ERROR - 2015-08-26 15:34:04 --> ACR Home/index OK

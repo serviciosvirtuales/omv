@@ -28,10 +28,16 @@ class Menu extends CI_Controller {
      *  Función que pinta el menú principal de la aplicación (una vez ingreso de usuario).
      */
     public function index() {
-        $data['page'] = 'Inicio';
-        $this->load->view('layout/header', $data);
-        $this->load->view('layout/navigation', $data);
-        $this->load->view('menu/menu_view', $data);
-        $this->load->view('layout/footer', $data);
+        if($this->ion_auth->logged_in()) //valido que haya iniciado sesion
+        {
+            $data['page'] = 'Inicio';
+            $this->load->view('layout/header', $data);
+            $this->load->view('layout/navigation', $data);
+            $this->load->view('menu/menu_view', $data);
+            $this->load->view('layout/footer', $data);
+        }else
+        {
+            redirect('home/logout'); // si no esta logueado redirijo al login.
+        }
     }
 }

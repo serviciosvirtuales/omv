@@ -30,13 +30,13 @@ class Patients extends CI_Controller
 
     public function index()
     {
-        if($this->ion_auth->logged_in())
+        if($this->ion_auth->logged_in()) //validamos login
         {
-             redirect('patients/view'); 
+             redirect('Patients/view'); 
         }
         else
         {
-            redirect('home/denied',refresh);
+            redirect('Home/denied',refresh);
         }
     }
 
