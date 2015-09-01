@@ -64,13 +64,18 @@ class Patients extends CI_Controller
         $crud->display_as('gender', 'Género');
         $crud->display_as('contact_phone', 'Teléfono de Contacto');
         $crud->display_as('institution', 'Institución');
-
+        
+        $crud->field_type('institution', 'dropdown', $this->momv->instituciones());
+        
         // Campos obligatorios
         $crud->required_fields('type_id', 'id_number', 'first_name', 'last_name', 'birth_date', 'gender', 'contact_phone', 'institution');
 
         // Validación de campos
         $crud->set_rules('id_number', 'No. Identificación', 'integer');
-
+        
+        //debemos validar que solo el admin pueda eliminar datos
+        $crud->unset_delete();
+        
         // Dropdowns (Quemados)
         $crud->field_type('type_id', 'dropdown', array(
             'TI' => 'Tarjeta de Identidad',
