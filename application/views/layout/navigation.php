@@ -7,7 +7,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Orientación Médica Virtual</a>
+                    <a class="navbar-brand" href="<?php echo site_url('/');?>">Orientación Médica Virtual</a>
             </div>
             <div id="navbar-collapsed1" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

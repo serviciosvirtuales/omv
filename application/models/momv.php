@@ -27,5 +27,31 @@ class Momv extends CI_Model
         }
         $this->db->trans_complete();
     }
+    
+    function user_institucion() // con esta funcion consultamos a que institucion pertenece el usuario logueado.
+    {
+        $this->db->trans_start();
+        
+        $user = $this->ion_auth->user()->row();
+        $id_usuario = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
+        
+        $query = $this->db->select('id_institucion_ed')->where('id',$id_usuario)->get('users');
+
+        //$str = $this->db->last_query();
+        //log_message('ERROR', 'error CIE10 ' . $str);		
+
+        if ($query->num_rows() > 0) 
+        {            
+            $row = $query->row(); 
+            $this->db->trans_complete();            
+            return $row->id_institucion_ed;
+        } 
+        else 
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+        $this->db->trans_complete();
+    }
 }
 

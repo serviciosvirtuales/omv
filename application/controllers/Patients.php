@@ -11,21 +11,12 @@ class Patients extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        //$this->output->enable_profiler(TRUE); //profiler para el seguimiento del performance                               
-        //$this->load->library('ion_auth');
-        //$this->load->model('model');
-        //$this->load->library('grocery_CRUD');
-
-        /* $this->output->set_header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-          $this->output->set_header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
-          $this->output->set_header('Cache-Control: post-check=0, pre-check=0', FALSE);
-          $this->output->set_header('Pragma: no-cache'); */
-
-        $this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-        ('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        $this->output->enable_profiler(TRUE); //profiler para el seguimiento del performance                               
+         
+        $this->output->set_header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+        $this->output->set_header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
         $this->output->set_header('Cache-Control: post-check=0, pre-check=0', FALSE);
         $this->output->set_header('Pragma: no-cache');
-        $this->output->set_header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
     }
 
     public function index()
@@ -49,6 +40,15 @@ class Patients extends CI_Controller
 
         // Inicialización CRUD
         $crud = new grocery_CRUD();
+        
+        //a continuacion validamos la institucion con el paciente
+        $user = $this->momv->user_institucion();        
+        
+        if (!$this->ion_auth->is_admin()) // si no es admin condisiono por usuario institucion educativa
+	{
+            $crud->where('institution',$user);
+	}
+	           
         $crud->set_subject('Pacientes');
         $crud->set_table('patients');
         $crud->columns('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'contact_phone', 'institution');
@@ -71,11 +71,13 @@ class Patients extends CI_Controller
         $crud->required_fields('type_id', 'id_number', 'first_name', 'last_name', 'birth_date', 'gender', 'contact_phone', 'institution');
 
         // Validación de campos
-        $crud->set_rules('id_number', 'No. Identificación', 'integer');
+        //$crud->set_rules('id_number', 'No. Identificación', 'integer');
         
         //debemos validar que solo el admin pueda eliminar datos
-        $crud->unset_delete();
-        
+        if (!$this->ion_auth->is_admin()) // si no es admin condisiono por usuario institucion educativa
+	{
+            $crud->unset_delete();
+        }
         // Dropdowns (Quemados)
         $crud->field_type('type_id', 'dropdown', array(
             'TI' => 'Tarjeta de Identidad',

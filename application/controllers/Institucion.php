@@ -63,21 +63,6 @@ class Institucion extends CI_Controller
         
         $crud->unset_delete();
         
-        // Dropdowns (Quemados)
-        /*
-        $crud->field_type('type_id', 'dropdown', array(
-            'TI' => 'Tarjeta de Identidad',
-            'CC' => 'Cédula de Ciudadanía',
-            'NUIP' => 'NUIP',
-            'Pasaporte' => 'Pasaporte',
-            'CE' => 'Cédula de Extranjería'
-        ));
-        $crud->field_type('gender', 'dropdown', array(
-            'Femenino' => 'Femenino',
-            'Masculino' => 'Masculino',
-            'Otro' => 'Otro'
-        ));
-        */
         // Pintado de formulario y creación de vista
         $output = $crud->render();
 
