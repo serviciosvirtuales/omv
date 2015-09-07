@@ -36,11 +36,17 @@ class Events extends CI_Controller
         $crud->set_subject('Eventos');
         $crud->set_table('evento');        
         $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'institucion_edu_id', 'estado');
-
+        
+        //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
+        $crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
+        
+        
+        
         // Labels de columnas
         //$crud->display_as('id_evento', 'Tipo de Identificación');
-        $crud->display_as('descripcion', 'Descripción del evento');
         $crud->display_as('paciente_id', 'Paciente');
+        $crud->display_as('descripcion', 'Descripción del evento');
+        
         //$crud->display_as('fecha_evento', 'Primer Nombre');
         //$crud->display_as('estado', 'Segundo Nombre');
         $user = $this->ion_auth->user()->row();
@@ -57,10 +63,15 @@ class Events extends CI_Controller
         // Campos obligatorios
         $crud->required_fields('descripcion','paciente_id');
         
-        $crud->add_fields('descripcion','registrado_por','paciente_id','institucion_edu_id'); // con add establecemos los campos para el formulario
-        $crud->edit_fields('descripcion','registrado_por','paciente_id','institucion_edu_id');
+        $crud->add_fields('paciente_id', 'descripcion','registrado_por','institucion_edu_id'); // con add establecemos los campos para el formulario
+        $crud->edit_fields('paciente_id', 'descripcion','registrado_por','institucion_edu_id');
         
-        $crud->unset_delete();
+        if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+	{
+            $crud->unset_delete();
+        }
+        
+        
                 
         
         // Pintado de formulario y creación de vista
@@ -70,5 +81,11 @@ class Events extends CI_Controller
         $this->load->view('layout/navigation', $data);
         $this->load->view('events/events', $output);
         $this->load->view('layout/footer', $data);
+    }
+    
+    function responder($id)
+    {
+        echo 'respondes evento '.$id;
+        //$id es el id del evento a responder
     }
 }
