@@ -35,44 +35,34 @@ class Events extends CI_Controller
         $crud = new grocery_CRUD();
         $crud->set_subject('Eventos');
         $crud->set_table('evento');        
-        $crud->columns('id_evento', 'descripcion', 'fecha_evento', 'estado', 'registrado_por');
+        $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'institucion_edu_id', 'estado');
 
         // Labels de columnas
         //$crud->display_as('id_evento', 'Tipo de Identificación');
         $crud->display_as('descripcion', 'Descripción del evento');
+        $crud->display_as('paciente_id', 'Paciente');
         //$crud->display_as('fecha_evento', 'Primer Nombre');
         //$crud->display_as('estado', 'Segundo Nombre');
         $user = $this->ion_auth->user()->row();
         $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
         
+        $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
+        
+        $id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
+        
+        $crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
+        
         $crud->field_type('registrado_por', 'hidden', $admin);
 
         // Campos obligatorios
-        $crud->required_fields('descripcion');
-        $crud->add_fields('descripcion','registrado_por'); // con add establecemos los campos para el formulario
-        $crud->edit_fields('descripcion','registrado_por');
+        $crud->required_fields('descripcion','paciente_id');
+        
+        $crud->add_fields('descripcion','registrado_por','paciente_id','institucion_edu_id'); // con add establecemos los campos para el formulario
+        $crud->edit_fields('descripcion','registrado_por','paciente_id','institucion_edu_id');
         
         $crud->unset_delete();
+                
         
-        
-        // Validación de campos
-        //$crud->set_rules('id_number', 'No. Identificación', 'integer');
-
-        // Dropdowns (Quemados)
-        /*
-        $crud->field_type('type_id', 'dropdown', array(
-            'TI' => 'Tarjeta de Identidad',
-            'CC' => 'Cédula de Ciudadanía',
-            'NUIP' => 'NUIP',
-            'Pasaporte' => 'Pasaporte',
-            'CE' => 'Cédula de Extranjería'
-        ));
-        $crud->field_type('gender', 'dropdown', array(
-            'Femenino' => 'Femenino',
-            'Masculino' => 'Masculino',
-            'Otro' => 'Otro'
-        ));
-        */
         // Pintado de formulario y creación de vista
         $output = $crud->render();
 

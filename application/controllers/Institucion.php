@@ -61,7 +61,10 @@ class Institucion extends CI_Controller
         // Validación de campos
         //$crud->set_rules('id_number', 'No. Identificación', 'integer');
         
-        $crud->unset_delete();
+        if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+	{
+            $crud->unset_delete();
+        }
         
         // Pintado de formulario y creación de vista
         $output = $crud->render();
