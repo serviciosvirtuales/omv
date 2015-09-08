@@ -63,9 +63,13 @@ class Patients extends CI_Controller
         $crud->display_as('birth_date', 'Fecha de Nacimiento');
         $crud->display_as('gender', 'Género');
         $crud->display_as('contact_phone', 'Teléfono de Contacto');
-        $crud->display_as('institution', 'Institución');
+        //$crud->display_as('institution', 'Institución');
         
-        $crud->field_type('institution', 'dropdown', $this->momv->instituciones());
+        //$crud->field_type('institution', 'dropdown', $this->momv->instituciones());
+        $user = $this->ion_auth->user()->row();
+        $cod_institucion = $user->id_institucion_ed;
+        
+        $crud->field_type('institution', 'hidden', $cod_institucion); // enviamos la institucion del usuario logueado
         
         // Campos obligatorios
         $crud->required_fields('type_id', 'id_number', 'first_name', 'last_name', 'birth_date', 'gender', 'contact_phone', 'institution');

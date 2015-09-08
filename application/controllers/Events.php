@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Events extends CI_Controller
@@ -8,7 +9,7 @@ class Events extends CI_Controller
     {
         parent::__construct();
         $this->output->enable_profiler(TRUE); //profiler para el seguimiento del performance                               
-        
+
         $this->output->set_header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
         $this->output->set_header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
         $this->output->set_header('Cache-Control: post-check=0, pre-check=0', FALSE);
@@ -17,16 +18,16 @@ class Events extends CI_Controller
 
     public function index()
     {
-        if($this->ion_auth->logged_in()) //validamos login
+        if ($this->ion_auth->logged_in()) //validamos login
         {
-             redirect('Events/view'); 
-        }
+            redirect('Events/view');
+        } 
         else
         {
-            redirect('Home/denied','refresh');
+            redirect('Home/denied', 'refresh');
         }
     }
-    
+
     public function view()
     {
         $data['page'] = 'Eventos';
@@ -34,46 +35,41 @@ class Events extends CI_Controller
         // Inicialización CRUD
         $crud = new grocery_CRUD();
         $crud->set_subject('Eventos');
-        $crud->set_table('evento');        
+        $crud->set_table('evento');
         $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'institucion_edu_id', 'estado');
-        
+
         //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
         $crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
-        
-        
-        
+
         // Labels de columnas
         //$crud->display_as('id_evento', 'Tipo de Identificación');
         $crud->display_as('paciente_id', 'Paciente');
         $crud->display_as('descripcion', 'Descripción del evento');
-        
+
         //$crud->display_as('fecha_evento', 'Primer Nombre');
         //$crud->display_as('estado', 'Segundo Nombre');
         $user = $this->ion_auth->user()->row();
         $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
-        
+
         $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
-        
+
         $id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
-        
+
         $crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
-        
+
         $crud->field_type('registrado_por', 'hidden', $admin);
 
         // Campos obligatorios
-        $crud->required_fields('descripcion','paciente_id');
-        
-        $crud->add_fields('paciente_id', 'descripcion','registrado_por','institucion_edu_id'); // con add establecemos los campos para el formulario
-        $crud->edit_fields('paciente_id', 'descripcion','registrado_por','institucion_edu_id');
-        
+        $crud->required_fields('descripcion', 'paciente_id');
+
+        $crud->add_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id'); // con add establecemos los campos para el formulario
+        $crud->edit_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id');
+
         if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
-	{
+        {
             $crud->unset_delete();
         }
-        
-        
-                
-        
+
         // Pintado de formulario y creación de vista
         $output = $crud->render();
 
@@ -82,10 +78,13 @@ class Events extends CI_Controller
         $this->load->view('events/events', $output);
         $this->load->view('layout/footer', $data);
     }
-    
+
     function responder($id)
     {
-        echo 'respondes evento '.$id;
+        echo 'respondes evento ' . $id;
         //$id es el id del evento a responder
+        // codigo para el multiselect del cie10:
+        //$crud->field_type('cie10', 'multiselect', $this->momv->cie10());
     }
+
 }
