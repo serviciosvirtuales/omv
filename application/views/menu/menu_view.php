@@ -13,7 +13,7 @@
                 </a>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
-                <a href="#">
+                <a href="events/consulta_historica">
                     <div class="mini-container">
                         <img src="<?php echo base_url() ?>includes/img/logo_historico.png" style="width: 60px; height: 60px" />
                         <h5>Ver Consultas Pasadas</h5>

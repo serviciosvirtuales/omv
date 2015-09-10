@@ -116,5 +116,41 @@ class Momv extends CI_Model
 
         $this->db->trans_complete();
     }
+    
+    function detalle_evento($id)
+    {
+        $this->db->trans_start();
+        
+        $query = $this->db->where('id_evento',$id)
+                ->get('evento');
+        
+        if($query->num_rows() > 0)
+        {
+            $this->db->trans_complete();
+            return $query;
+        }
+        else
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+        
+        
+        $this->db->trans_complete();
+    }
+    
+    function actualizo_evento($id) 
+    {
+        $this->db->trans_start(); // manejo transacciones inicio
 
+        $estado = 'Finalizado';
+
+        $data = array('estado' => $estado);
+
+        $this->db->where('id_evento', $id);
+
+        $this->db->update('evento', $data);
+
+        $this->db->trans_complete(); // manejo transacciones fin
+    }
 }
