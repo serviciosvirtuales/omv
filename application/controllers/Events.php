@@ -363,12 +363,6 @@ class Events extends CI_Controller
         $this->momv->actualizo_evento($id);
                 
         return TRUE;
-    }
+    }    
     
-    function consulta_historica()
-    {        
-     // debo mostrar tanto el evento con su respuesta
-        
-    
-    }
 }

@@ -134,8 +134,7 @@ class Momv extends CI_Model
             $this->db->trans_complete();
             return FALSE;
         }
-        
-        
+                
         $this->db->trans_complete();
     }
     
@@ -152,5 +151,36 @@ class Momv extends CI_Model
         $this->db->update('evento', $data);
 
         $this->db->trans_complete(); // manejo transacciones fin
+    }
+    
+    function consulta_historica()
+    {
+        $this->db->trans_start();
+        
+        $user = $this->ion_auth->user()->row();
+        $admin = $user->id;
+        
+        $query = $this->db->select('e.id_evento, e.paciente_id, e.descripcion, e.fecha_evento, e.adjunto1 as eadj1, e.adjunto2 as eadj2, e.adjunto3 as eadj3, e.adjunto4 as eadj4,
+                                    e.adjunto5 as eadj5, e.estado, r.respuesta, r.cie10, r.adjunto1 as radj1, r.adjunto2 as radj2, r.adjunto3 as radj3, r.adjunto4 as radj4,
+                                    r.adjunto5 as radj5, r.fecha_respuesta, r.registrado_por as responde')
+                ->from('evento e, respuesta r')
+                ->where('e.estado = "Finalizado"')
+                ->where('e.id_evento = r.id_evento')
+                ->where('e.registrado_por',$admin)
+                ->get('');
+        
+        if($query->num_rows() > 0)
+        {
+            $this->db->trans_complete();
+            return $query;
+        }
+        else
+        {
+            $this->db->trans_complete();
+            return NULL;
+        }
+        
+        
+        $this->db->trans_complete();
     }
 }
