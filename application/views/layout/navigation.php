@@ -29,3 +29,6 @@
             </div>
     	</div>
     </nav>
+<div class="row">
+        <?php echo "<div class='jumbotron' style='background-image:url(" . base_url() . "includes/img/banner1.png); no-repeat fixed; background-size:cover; background-position: right 0px top -120px; min-height: 180px;' ></div>"; ?>
+    </div>

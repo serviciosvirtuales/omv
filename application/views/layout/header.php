@@ -13,7 +13,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <link href="<?php echo base_url() ?>/includes/css/basic.css" rel="stylesheet">
         
     </head>
-    <body>
+    <body>        
         <script src="<?php echo base_url() ?>/includes/js/jquery.min.js"></script>
         <script src="<?php echo base_url() ?>/includes/js/bootstrap.min.js"></script>
         <div class="container">
+            
+            

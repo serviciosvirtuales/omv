@@ -153,7 +153,8 @@ class Momv extends CI_Model
         $this->db->trans_complete(); // manejo transacciones fin
     }
     
-    function consulta_historica()
+    /*
+    function consulta_historica() //se comenta
     {
         $this->db->trans_start();
         
@@ -182,5 +183,11 @@ class Momv extends CI_Model
         
         
         $this->db->trans_complete();
+    }      
+     */
+    
+    function historia_paciente($id)
+    {
+        
     }
 }

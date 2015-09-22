@@ -1,7 +1,5 @@
 <div class="container-fluid">
-    <div class="row">
-        <?php echo "<div class='jumbotron' style='background-image:url(" . base_url() . "includes/img/banner1.png); no-repeat fixed; background-size:cover; background-position: right 0px top -120px; min-height: 180px;' >"; ?>
-    </div>
+    
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="col-xs-12 col-sm-6 col-md-6">

@@ -78,10 +78,11 @@ class Events extends CI_Controller
 
         $crud->add_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
         $crud->edit_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
-
+                        
         if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
         {
             $crud->unset_delete();
+            
         }
             //a continuacion dejo los callbacks para las funciones del crud
             //########################## Importantes  ##############################
@@ -90,7 +91,7 @@ class Events extends CI_Controller
             //$crud->callback_delete(array($this, 'delete_event_callback'));
             //$crud->callback_after_insert(array($this, 'adjuntos_evento')); // no se requiere ya que se daña la carga si los adjuntos estan en tablas separadas
             //######################################################################
-        
+        $crud->unset_back_to_list();
         // Pintado de formulario y creación de vista
         $output = $crud->render();
 
@@ -163,7 +164,7 @@ class Events extends CI_Controller
     }
     */
     
-     public function listado()
+    public function listado()
     {
         if ($this->ion_auth->logged_in()) //validamos login
         {
@@ -348,9 +349,11 @@ class Events extends CI_Controller
          
         $output = $crud->render();
 
+        
         $this->load->view('layout/header', $data);
         $this->load->view('layout/navigation', $data);
-        $this->load->view('events/consulta', $data);
+        
+        $this->load->view('events/consulta', $data); //agrego una vista para mostrar la consulta realizada
         $this->load->view('events/events', $output);
         $this->load->view('layout/footer', $data);
     }
