@@ -1,7 +1,5 @@
 <div class="container-fluid">
-    
-    
-    
+      
     <h3>Histórico:</h3>
     <div class="col-xs-12 col-sm-11 col-md-11">    
         <!-- Código que inserta la tabla de Grocery CRUD -->

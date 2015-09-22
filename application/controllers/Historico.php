@@ -82,7 +82,23 @@ class Historico extends CI_Controller
         if ($this->ion_auth->logged_in()) //validamos login
         {
            //aqui traemos todos los eventos finalizados asociados al id del paciente que se recibe.
-            echo 'se recibe id paciente '.$id;
+            //echo 'se recibe id paciente '.$id;
+            $data['historicos']=$this->momv->historia_paciente($id);
+            $data['page'] = 'Historico de eventos por paciente';
+            
+            if(!$data['historicos'])
+            {
+                redirect('Home/denied','refresh');
+            }
+            else
+            {
+                $this->load->view('layout/header', $data);
+                $this->load->view('layout/navigation', $data);
+                $this->load->view('events/detalle', $data);
+                $this->load->view('layout/footer', $data);
+            }
+            
+            
         } 
         else
         {

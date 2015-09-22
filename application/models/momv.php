@@ -188,6 +188,41 @@ class Momv extends CI_Model
     
     function historia_paciente($id)
     {
+        $this->db->trans_start();
         
+        /*
+        select e.id_evento, e.descripcion, e.fecha_evento, e.institucion_edu_id, e.estado,
+        e.adjunto1 as eadj1, e.adjunto2 as eadj2, e.adjunto3 as eadj3, e.adjunto4 as eadj4, e.adjunto5 as eadj5,
+        r.respuesta, r.cie10, r.fecha_respuesta, r.registrado_por,
+        r.adjunto1 as radj1, r.adjunto2 as radj2, r.adjunto3 as radj3, r.adjunto4 as radj4, r.adjunto5 as radj5
+        from evento e, respuesta r 
+        where e.paciente_id = (select id_number from patients where id=2)
+        and e.estado = 'Finalizado'
+        and r.id_evento = e.id_evento
+
+        */
+        $this->db->select('e.id_evento, e.descripcion, e.fecha_evento, e.institucion_edu_id, e.estado,
+                            e.adjunto1 as eadj1, e.adjunto2 as eadj2, e.adjunto3 as eadj3, e.adjunto4 as eadj4, e.adjunto5 as eadj5,
+                            r.respuesta, r.cie10, r.fecha_respuesta, r.registrado_por,
+                            r.adjunto1 as radj1, r.adjunto2 as radj2, r.adjunto3 as radj3, r.adjunto4 as radj4, r.adjunto5 as radj5')
+                ->from('evento e, respuesta r')
+                ->where('paciente_id = (select id_number from patients where id='.$id.')')
+                ->where('e.estado = "Finalizado"')
+                ->where('r.id_evento = e.id_evento');
+        
+        $query = $this->db->get('');
+        
+        if($query->num_rows() > 0)
+        {
+            $this->db->trans_complete();
+            return $query;
+        }
+        else
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+        
+        $this->db->trans_complete();
     }
 }
