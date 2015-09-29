@@ -64,10 +64,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '127.0.0.1',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'fsfb_omv',
+	'hostname' => 'localhost',
+	'username' => 'fsfbedu_admin',
+	'password' => 'admblog',
+	'database' => 'demo_omv',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

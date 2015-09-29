@@ -38,8 +38,35 @@
 
 
                             <label>Pregunta: </label>
-                            <p>'.$value->descripcion.'</p>
-
+                            <p>'.$value->descripcion.'</p>';
+                                
+                            if($value->eadj1 || $value->eadj2 || $value->eadj3 || $value->eadj4 || $value->eadj5)
+                            {
+                                echo ' 
+                                <label>Adjuntos: </label>
+                                <p><ul>';if($value->eadj1)
+                                    {
+                                        echo '<li><a href="'.base_url().'/assets/uploads/files/evento/'.$value->eadj1.'" target="_blank">Descarga</a></li>';
+                                    }
+                                    if($value->eadj2)
+                                    {
+                                    echo '<li><a href="'.base_url().'/assets/uploads/files/evento/'.$value->eadj2.'" target="_blank">Descarga</a></li>';
+                                    }
+                                    if($value->eadj3)
+                                    {
+                                        echo '<li><a href="'.base_url().'/assets/uploads/files/evento/'.$value->eadj3.'" target="_blank">Descarga</a></li>';
+                                    }
+                                    if($value->eadj4)
+                                    {
+                                        echo '<li><a href="'.base_url().'/assets/uploads/files/evento/'.$value->eadj4.'" target="_blank">Descarga</a></li>';
+                                    }
+                                    if($value->eadj5)
+                                    {
+                                        echo '<li><a href="'.base_url().'/assets/uploads/files/evento/'.$value->eadj5.'" target="_blank">Descarga</a></li>';
+                                    }
+                                echo '</ul></p>';
+                            }//if de adjuntos
+                            echo ' 
                             <label>Clasificación: CIE10</label>';
                             /*
                             //$data = str_replace(',','","',$value->cie10);
@@ -55,10 +82,36 @@
                             
                         echo '
                             <label>Respuesta: </label>
-                            <p>'.$value->respuesta.'</p>
+                            <p>'.$value->respuesta.'</p>';
+                                
+                        if($value->radj1 || $value->radj2 || $value->radj3 || $value->radj4 || $value->radj5)
+                            {
+                                echo ' 
+                                <label>Adjuntos Respuesta: </label>
+                                <p><ul>';if($value->radj1)
+                                    {
+                                        echo '<li><a href="'.base_url().'/assets/uploads/files/respuesta/'.$value->radj1.'" target="_blank">Descarga</a></li>';
+                                    }
+                                    if($value->radj2)
+                                    {
+                                    echo '<li><a href="'.base_url().'/assets/uploads/files/respuesta/'.$value->radj2.'" target="_blank">Descarga</a></li>';
+                                    }
+                                    if($value->radj3)
+                                    {
+                                        echo '<li><a href="'.base_url().'/assets/uploads/files/respuesta/'.$value->radj3.'" target="_blank">Descarga</a></li>';
+                                    }
+                                    if($value->radj4)
+                                    {
+                                        echo '<li><a href="'.base_url().'/assets/uploads/files/respuesta/'.$value->radj4.'" target="_blank">Descarga</a></li>';
+                                    }
+                                    if($value->radj5)
+                                    {
+                                        echo '<li><a href="'.base_url().'/assets/uploads/files/respuesta/'.$value->radj5.'" target="_blank">Descarga</a></li>';
+                                    }
+                                echo '</ul></p>';
+                            }//if de adjuntos
 
-
-                          <div class="modal-footer">
+                        echo ' <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>	        
 
 

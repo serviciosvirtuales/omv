@@ -92,6 +92,15 @@ class Events extends CI_Controller
             //$crud->callback_after_insert(array($this, 'adjuntos_evento')); // no se requiere ya que se daña la carga si los adjuntos estan en tablas separadas
             //######################################################################
         $crud->unset_back_to_list();
+        $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
+		         	<script type="text/javascript">
+		          	window.location = "' . site_url(strtolower('home') . '/' . strtolower('index')) . '";
+		         	</script>
+		         	<div style="display:none">
+		         	'
+            );
+        
+        
         // Pintado de formulario y creación de vista
         $output = $crud->render();
 
@@ -99,70 +108,7 @@ class Events extends CI_Controller
         $this->load->view('layout/navigation', $data);
         $this->load->view('events/events', $output);
         $this->load->view('layout/footer', $data);
-    }
-    /*
-    function adjuntos_evento($post_array,$primary_key)
-    {
-        log_message('ERROR', 'ACR - adjuntos_evento ' .$primary_key);
-        return TRUE;
-    }
-    */
-    /*
-    function delete_event_callback($primary_key)
-    {
-        if ($this->ion_auth_model->delete_user($primary_key))
-        {
-            return true;
-        } 
-        else
-        {
-            return false;
-        }
-    }
-    */
-    
-    /*
-    function edit_event_callback($post_array, $primary_key = null)
-    {
-        $username = $post_array['username'];
-        $email = $post_array['email'];
-        $data = array(
-            'username' => $username,
-            'email' => $email,
-            'password' => $post_array['password'],
-            'id_especialidad' => $post_array['id_especialidad'],
-            'first_name' => $post_array['first_name'],
-            'last_name' => $post_array['last_name'],
-            'id_institucion_ed' =>$post_array['id_institucion_ed']
-        );
-
-        $this->ion_auth_model->update($primary_key, $data);
-
-        return true;
-    }
-    */
-    
-    /*
-    function create_event_callback($post_array, $primary_key = null)
-    {
-        //log_message('ERROR', 'ACR - rol fue ' . $post_array['rol']);
-        $username = $post_array['email'];
-        $password = $post_array['password'];
-        $email = $post_array['email'];
-        $data = array(
-            'phone' => $post_array['phone'],
-            'id_especialidad' => $post_array['id_especialidad'],
-            'first_name' => $post_array['first_name'],
-            'last_name' => $post_array['last_name'],
-            'id_institucion_ed' => $post_array['id_institucion_ed']
-        );
-        //$group =  array('2');	//2 es el grupo de los usuarios de entidad
-        $group = array($post_array['rol']);
-        $this->ion_auth_model->register($username, $password, $email, $data, $group);
-
-        return $this->db->insert_id();
-    }
-    */
+    }    
     
     public function listado()
     {
