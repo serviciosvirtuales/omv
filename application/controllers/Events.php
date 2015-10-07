@@ -175,6 +175,7 @@ class Events extends CI_Controller
         if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
         {
             $crud->unset_delete();
+            $crud->unset_add();
         }
             //a continuacion dejo los callbacks para las funciones del crud
             //########################## Importantes  ##############################
@@ -185,7 +186,7 @@ class Events extends CI_Controller
             //######################################################################
         
         // Pintado de formulario y creación de vista
-        
+        //$crud->unset_add();
         $crud->unset_print();
         //$crud->unset_read();
                 
@@ -193,7 +194,7 @@ class Events extends CI_Controller
 
         $this->load->view('layout/header', $data);
         $this->load->view('layout/navigation', $data);
-        $this->load->view('events/events', $output);
+        $this->load->view('events/responde_evento', $output);
         $this->load->view('layout/footer', $data);
     }
     
@@ -300,7 +301,7 @@ class Events extends CI_Controller
         $this->load->view('layout/navigation', $data);
         
         $this->load->view('events/consulta', $data); //agrego una vista para mostrar la consulta realizada
-        $this->load->view('events/events', $output);
+        $this->load->view('events/responde_evento', $output);
         $this->load->view('layout/footer', $data);
     }
     

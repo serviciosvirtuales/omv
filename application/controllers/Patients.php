@@ -52,6 +52,9 @@ class Patients extends CI_Controller
         $crud->set_subject('Pacientes');
         $crud->set_table('patients');
         $crud->columns('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'contact_phone', 'institution');
+        
+        //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
+        $crud->add_action('Crear Evento', site_url('/includes/img/responder.png'), '/Events/view/add');
 
         // Labels de columnas
         $crud->display_as('type_id', 'Tipo de Identificación');
@@ -95,7 +98,13 @@ class Patients extends CI_Controller
             'Masculino' => 'Masculino',
             'Otro' => 'Otro'
         ));
-
+        $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
+		         	<script type="text/javascript">
+		          	window.location = "' . site_url(strtolower('home') . '/' . strtolower('index')) . '";
+		         	</script>
+		         	<div style="display:none">
+		         	'
+            );
         // Pintado de formulario y creación de vista
         $output = $crud->render();
 

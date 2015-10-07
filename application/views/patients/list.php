@@ -1,7 +1,7 @@
 <div class="container-fluid">
     
     
-    <h3>Ver Pacientes</h3>
+    <h3>Pacientes</h3>
     <div class="col-xs-12 col-sm-11 col-md-11">    
         <!-- Código que inserta la tabla de Grocery CRUD -->
         <?php 
