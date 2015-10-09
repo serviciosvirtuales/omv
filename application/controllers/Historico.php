@@ -88,7 +88,9 @@ class Historico extends CI_Controller
             
             if(!$data['historicos'])
             {
-                redirect('Home/denied','refresh');
+                $this->session->set_flashdata('message', 'Aún no puedes consultar los eventos del paciente');
+                redirect('/historico/lista', 'refresh');
+                
             }
             else
             {

@@ -121,8 +121,11 @@ class Momv extends CI_Model
     {
         $this->db->trans_start();
         
-        $query = $this->db->where('id_evento',$id)
-                ->get('evento');
+        $query = $this->db->select('e.*, p.* ')
+                ->from('evento e, patients p')
+                ->where('e.id_evento',$id)
+                ->where('e.paciente_id = p.id_number')
+                ->get('');
         
         if($query->num_rows() > 0)
         {

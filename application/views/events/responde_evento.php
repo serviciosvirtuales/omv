@@ -1,7 +1,4 @@
 <div class="container-fluid">
-   
-    
-    
     <h3>Eventos</h3>
     
     <div class="col-xs-12 col-sm-11 col-md-11">    

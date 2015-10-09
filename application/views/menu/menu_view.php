@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    
+ <?php echo "<h2 class='session'>".$this->session->flashdata('message')."</h2>";?>   
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="col-xs-12 col-sm-6 col-md-6">
