@@ -1,3 +1,6 @@
+<div id="logoacr" >
+        <img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" height="110px"/>
+    </div>
 <nav class="navbar navbar-default">
     	<div class="container-fluid">
             <div class="navbar-header">
@@ -17,8 +20,8 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Consultas <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Crear Evento</a></li>
-                          <li><a href="#">Ver Consultas Pasadas</a></li>
+                          <li><a href="<?php echo site_url('Events/view/add');?>">Crear Evento</a></li>
+                          <li><a href="<?php echo site_url('Historico/lista');?>">Ver Consultas Pasadas</a></li>
                         </ul>
                     </li>
                     <li>

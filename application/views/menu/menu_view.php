@@ -1,7 +1,14 @@
 <div class="container-fluid">
+    
  <?php echo "<h2 class='session'>".$this->session->flashdata('message')."</h2>";?>   
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6">
+            <?php
+            // 1 admin 2 medico 3 colegio 4 generalUser
+            $group = array(1,3);
+            if ($this->ion_auth->in_group($group))
+            {
+               ?> 
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <a href="<?php echo site_url('Events');?>">
                     <div class="mini-container">
@@ -10,6 +17,13 @@
                     </div>
                 </a>
             </div>
+            <?php
+            }
+            // 1 admin 2 medico 3 colegio 4 generalUser
+            $group2 = array(1,2,3);
+            if ($this->ion_auth->in_group($group2))
+            {                
+               ?> 
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <a href="historico">
                     <div class="mini-container">
@@ -18,6 +32,13 @@
                     </div>
                 </a>
             </div>
+            <?php
+            }
+            // 1 admin 2 medico 3 colegio 4 generalUser
+            $group3 = array(1,2);
+            if ($this->ion_auth->in_group($group3))
+            {                
+               ?> 
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <a href="events/listado">
                     <div class="mini-container">
@@ -26,6 +47,13 @@
                     </div>
                 </a>
             </div>
+            <?php
+            }
+            // 1 admin 2 medico 3 colegio 4 generalUser
+            //$group = array(1,3);
+            if ($this->ion_auth->in_group($group))
+            {                
+               ?>
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <a href="<?php echo site_url('patients') ?>">
                     <div class="mini-container">
@@ -34,6 +62,13 @@
                     </div>
                 </a>
             </div>
+            <?php
+            }
+            // 1 admin 2 medico 3 colegio 4 generalUser
+            $group4 = 1;
+            if ($this->ion_auth->in_group($group4))
+            {                
+               ?> 
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <a href="<?php echo site_url('personas') ?>">
                     <div class="mini-container">
@@ -42,6 +77,13 @@
                     </div>
                 </a>
             </div>
+            <?php
+            }
+            // 1 admin 2 medico 3 colegio 4 generalUser
+            //$group4 = 1;
+            if ($this->ion_auth->in_group($group4))
+            {                
+               ?>
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <a href="<?php echo site_url('institucion') ?>">
                     <div class="mini-container">
@@ -50,8 +92,11 @@
                     </div>
                 </a>
             </div>
+            <?php
+            }
+            ?>
         </div>
-
+        
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="mini-container">
                 <h5>El Servicio de Orientación Médica Virtual

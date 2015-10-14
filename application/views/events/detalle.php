@@ -19,7 +19,7 @@
             //echo '<td style="text-align:center;"><a href="#/'.$value->id_evento.'" target="_blank" class="btn btn-info">Ver Más</a></td>';
             
             //se comenta la siguiente linea y el uso de modal 
-            echo '<td><button class="btn btn-info" data-toggle="modal" data-target="#myModal'.$value->id_evento.'">ver más</button></td>';
+            echo '<td align="center"><button class="btn btn-info" data-toggle="modal" data-target="#myModal'.$value->id_evento.'">ver más</button></td>';
             echo '</tr>';
             // seccion para el modal
             echo '
@@ -36,7 +36,7 @@
                           </div>
                           <div class="modal-body">        
 
-
+                           <label>Paciente: </label><p>'.$value->first_name.' '.$value->middle_name.' '.$value->last_name.'</p>
                             <label>Pregunta: </label>
                             <p>'.$value->descripcion.'</p>';
                                 
@@ -113,7 +113,6 @@
 
                         echo ' <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>	        
-
 
                           </div>
                         </div>

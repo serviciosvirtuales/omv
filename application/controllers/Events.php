@@ -20,7 +20,16 @@ class Events extends CI_Controller
     {
         if ($this->ion_auth->logged_in()) //validamos login
         {
-            redirect('Events/view/add');
+            $group = array(1,3);
+            if ($this->ion_auth->in_group($group))
+            {
+                redirect('Events/view/add');
+            }
+            else
+            {
+                $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
+                redirect('/', 'refresh');
+            }
         } 
         else
         {
@@ -30,91 +39,109 @@ class Events extends CI_Controller
 
     public function view()
     {
-        $data['page'] = 'Eventos';
-        $estado = 'Recibido';
-        // Inicialización CRUD
-        $crud = new grocery_CRUD();
-        $this->config->set_item('grocery_crud_file_upload_allow_file_types', 'gif|jpeg|jpg|png|doc|docx|pdf');
-        $crud->set_subject('Eventos');
-        $crud->where('estado',$estado);
-        $crud->set_table('evento');
-        
-        $crud->set_field_upload('adjunto1','assets/uploads/files/evento');      
-        $crud->set_field_upload('adjunto2','assets/uploads/files/evento');      
-        $crud->set_field_upload('adjunto3','assets/uploads/files/evento');      
-        $crud->set_field_upload('adjunto4','assets/uploads/files/evento');      
-        $crud->set_field_upload('adjunto5','assets/uploads/files/evento');
-        
-        $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'institucion_edu_id', 'estado','adjunto1');
-
-        //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
-        $crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
-
-        // Labels de columnas
-        $crud->display_as('fecha_evento', 'Registrado el');
-        $crud->display_as('paciente_id', 'Paciente');
-        $crud->display_as('descripcion', 'Descripción del evento');
-        $crud->display_as('institucion_edu_id', 'Código Institución Educativa');
-        $crud->display_as('adjunto1', 'Archivo Adjunto');
-        $crud->display_as('adjunto2', 'Archivo Adjunto');
-        $crud->display_as('adjunto3', 'Archivo Adjunto');
-        $crud->display_as('adjunto4', 'Archivo Adjunto');
-        $crud->display_as('adjunto5', 'Archivo Adjunto');
-        
-        //$crud->display_as('estado', 'Segundo Nombre');
-        $user = $this->ion_auth->user()->row();
-        $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
-
-        $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
-
-        $id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
-
-        $crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
-
-        $crud->field_type('registrado_por', 'hidden', $admin);
-
-        // Campos obligatorios
-        $crud->required_fields('descripcion', 'paciente_id');
-
-        $crud->add_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
-        $crud->edit_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
-                        
-        if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+        $group = array(1,3);
+        if ($this->ion_auth->in_group($group))
         {
-            $crud->unset_delete();
-            
-        }
-            //a continuacion dejo los callbacks para las funciones del crud
-            //########################## Importantes  ##############################
-            //$crud->callback_insert(array($this, 'create_event_callback'));
-            //$crud->callback_update(array($this, 'edit_event_callback'));
-            //$crud->callback_delete(array($this, 'delete_event_callback'));
-            //$crud->callback_after_insert(array($this, 'adjuntos_evento')); // no se requiere ya que se daña la carga si los adjuntos estan en tablas separadas
-            //######################################################################
-        $crud->unset_back_to_list();
-        $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
-		         	<script type="text/javascript">
-		          	window.location = "' . site_url(strtolower('home') . '/' . strtolower('index')) . '";
-		         	</script>
-		         	<div style="display:none">
-		         	'
-            );
-        
-        
-        // Pintado de formulario y creación de vista
-        $output = $crud->render();
+            $data['page'] = 'Eventos';
+            $estado = 'Recibido';
+            // Inicialización CRUD
+            $crud = new grocery_CRUD();
+            $this->config->set_item('grocery_crud_file_upload_allow_file_types', 'gif|jpeg|jpg|png|doc|docx|pdf');
+            $crud->set_subject('Eventos');
+            $crud->where('estado',$estado);
+            $crud->set_table('evento');
 
-        $this->load->view('layout/header', $data);
-        $this->load->view('layout/navigation', $data);
-        $this->load->view('events/events', $output);
-        $this->load->view('layout/footer', $data);
+            $crud->set_field_upload('adjunto1','assets/uploads/files/evento');      
+            $crud->set_field_upload('adjunto2','assets/uploads/files/evento');      
+            $crud->set_field_upload('adjunto3','assets/uploads/files/evento');      
+            $crud->set_field_upload('adjunto4','assets/uploads/files/evento');      
+            $crud->set_field_upload('adjunto5','assets/uploads/files/evento');
+
+            $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'institucion_edu_id', 'estado','adjunto1');
+
+            //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
+            $crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
+
+            // Labels de columnas
+            $crud->display_as('fecha_evento', 'Registrado el');
+            $crud->display_as('paciente_id', 'Paciente');
+            $crud->display_as('descripcion', 'Descripción del evento');
+            $crud->display_as('institucion_edu_id', 'Código Institución Educativa');
+            $crud->display_as('adjunto1', 'Archivo Adjunto');
+            $crud->display_as('adjunto2', 'Archivo Adjunto');
+            $crud->display_as('adjunto3', 'Archivo Adjunto');
+            $crud->display_as('adjunto4', 'Archivo Adjunto');
+            $crud->display_as('adjunto5', 'Archivo Adjunto');
+
+            //$crud->display_as('estado', 'Segundo Nombre');
+            $user = $this->ion_auth->user()->row();
+            $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
+
+            $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
+
+            $id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
+
+            $crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
+
+            $crud->field_type('registrado_por', 'hidden', $admin);
+
+            // Campos obligatorios
+            $crud->required_fields('descripcion', 'paciente_id');
+
+            $crud->add_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
+            $crud->edit_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
+
+            if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+            {
+                $crud->unset_delete();
+
+            }
+                //a continuacion dejo los callbacks para las funciones del crud
+                //########################## Importantes  ##############################
+                //$crud->callback_insert(array($this, 'create_event_callback'));
+                //$crud->callback_update(array($this, 'edit_event_callback'));
+                //$crud->callback_delete(array($this, 'delete_event_callback'));
+                //$crud->callback_after_insert(array($this, 'adjuntos_evento')); // no se requiere ya que se daña la carga si los adjuntos estan en tablas separadas
+                //######################################################################
+            $crud->unset_back_to_list();
+            $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
+                                    <script type="text/javascript">
+                                    window.location = "' . site_url(strtolower('home') . '/' . strtolower('index')) . '";
+                                    </script>
+                                    <div style="display:none">
+                                    '
+                );
+
+
+            // Pintado de formulario y creación de vista
+            $output = $crud->render();
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('layout/navigation', $data);
+            $this->load->view('events/events', $output);
+            $this->load->view('layout/footer', $data);
+        }
+        else
+        {
+            $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
+            redirect('/', 'refresh');
+        }
     }    
     
     public function listado()
     {
         if ($this->ion_auth->logged_in()) //validamos login
         {
-            redirect('Events/lista');
+            $group3 = array(1,2);
+            if ($this->ion_auth->in_group($group3))
+            {
+                redirect('Events/lista');
+            }
+            else
+            {
+                $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
+                redirect('/', 'refresh');
+            }
         } 
         else
         {
@@ -124,87 +151,105 @@ class Events extends CI_Controller
 
     public function lista()
     {
-        $data['page'] = 'Eventos';
-        $estado = 'Recibido';
-        // Inicialización CRUD
-        $crud = new grocery_CRUD();
-        $crud->set_subject('Eventos');
-        $crud->where('estado',$estado);
-        $crud->set_table('evento');
-        
-        $crud->set_field_upload('adjunto1','assets/uploads/files/evento');      
-        $crud->set_field_upload('adjunto2','assets/uploads/files/evento');      
-        $crud->set_field_upload('adjunto3','assets/uploads/files/evento');      
-        $crud->set_field_upload('adjunto4','assets/uploads/files/evento');      
-        $crud->set_field_upload('adjunto5','assets/uploads/files/evento');
-        
-        $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'institucion_edu_id', 'estado');
-
-        //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
-        $crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
-
-        // Labels de columnas
-        $crud->display_as('fecha_evento', 'Registrado el');
-        $crud->display_as('paciente_id', 'Paciente');
-        $crud->display_as('descripcion', 'Descripción del evento');
-        $crud->display_as('institucion_edu_id', 'Código Institución Educativa');
-        $crud->display_as('adjunto1', 'Archivo Adjunto');
-        $crud->display_as('adjunto2', 'Archivo Adjunto');
-        $crud->display_as('adjunto3', 'Archivo Adjunto');
-        $crud->display_as('adjunto4', 'Archivo Adjunto');
-        $crud->display_as('adjunto5', 'Archivo Adjunto');
-        
-        //$crud->display_as('estado', 'Segundo Nombre');
-        $user = $this->ion_auth->user()->row();
-        $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
-
-        $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
-
-        $id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
-
-        $crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
-
-        $crud->field_type('registrado_por', 'hidden', $admin);
-
-        // Campos obligatorios
-        $crud->required_fields('descripcion', 'paciente_id');
-
-        $crud->add_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
-        $crud->edit_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
-
-        if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+        $group3 = array(1,2);
+        if ($this->ion_auth->in_group($group3))
         {
-            //$crud->unset_delete();
-            //$crud->unset_add();
-        }
-            //a continuacion dejo los callbacks para las funciones del crud
-            //########################## Importantes  ##############################
-            //$crud->callback_insert(array($this, 'create_event_callback'));
-            //$crud->callback_update(array($this, 'edit_event_callback'));
-            //$crud->callback_delete(array($this, 'delete_event_callback'));
-            //$crud->callback_after_insert(array($this, 'adjuntos_evento'));
-            //######################################################################
-        
-        // Pintado de formulario y creación de vista
-        $crud->unset_edit();
-        $crud->unset_delete();
-        $crud->unset_add();
-        $crud->unset_print();
-        //$crud->unset_read();
-                
-        $output = $crud->render();
+            $data['page'] = 'Eventos';
+            $estado = 'Recibido';
+            // Inicialización CRUD
+            $crud = new grocery_CRUD();
+            $crud->set_subject('Eventos');
+            $crud->where('estado',$estado);
+            $crud->set_table('evento');
 
-        $this->load->view('layout/header', $data);
-        $this->load->view('layout/navigation', $data);
-        $this->load->view('events/responde_evento', $output);
-        $this->load->view('layout/footer', $data);
+            $crud->set_field_upload('adjunto1','assets/uploads/files/evento');      
+            $crud->set_field_upload('adjunto2','assets/uploads/files/evento');      
+            $crud->set_field_upload('adjunto3','assets/uploads/files/evento');      
+            $crud->set_field_upload('adjunto4','assets/uploads/files/evento');      
+            $crud->set_field_upload('adjunto5','assets/uploads/files/evento');
+
+            $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'institucion_edu_id', 'estado');
+
+            //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
+            $crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
+
+            // Labels de columnas
+            $crud->display_as('fecha_evento', 'Registrado el');
+            $crud->display_as('paciente_id', 'Paciente');
+            $crud->display_as('descripcion', 'Descripción del evento');
+            $crud->display_as('institucion_edu_id', 'Código Institución Educativa');
+            $crud->display_as('adjunto1', 'Archivo Adjunto');
+            $crud->display_as('adjunto2', 'Archivo Adjunto');
+            $crud->display_as('adjunto3', 'Archivo Adjunto');
+            $crud->display_as('adjunto4', 'Archivo Adjunto');
+            $crud->display_as('adjunto5', 'Archivo Adjunto');
+
+            //$crud->display_as('estado', 'Segundo Nombre');
+            $user = $this->ion_auth->user()->row();
+            $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
+
+            $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento_responde());
+
+            $id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
+
+            $crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
+
+            $crud->field_type('registrado_por', 'hidden', $admin);
+
+            // Campos obligatorios
+            $crud->required_fields('descripcion', 'paciente_id');
+
+            $crud->add_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
+            $crud->edit_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
+
+            if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+            {
+                //$crud->unset_delete();
+                //$crud->unset_add();
+            }
+                //a continuacion dejo los callbacks para las funciones del crud
+                //########################## Importantes  ##############################
+                //$crud->callback_insert(array($this, 'create_event_callback'));
+                //$crud->callback_update(array($this, 'edit_event_callback'));
+                //$crud->callback_delete(array($this, 'delete_event_callback'));
+                //$crud->callback_after_insert(array($this, 'adjuntos_evento'));
+                //######################################################################
+
+            // Pintado de formulario y creación de vista
+            $crud->unset_edit();
+            $crud->unset_delete();
+            $crud->unset_add();
+            $crud->unset_print();
+            //$crud->unset_read();
+
+            $output = $crud->render();
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('layout/navigation', $data);
+            $this->load->view('events/responde_evento', $output);
+            $this->load->view('layout/footer', $data);
+        }
+        else
+        {
+            $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
+            redirect('/', 'refresh'); 
+        }
     }
     
     function responder($id)
     {
         if ($this->ion_auth->logged_in()) //validamos login
         {
-            redirect('Events/responde_evento/'.$id.'/add');
+            $group3 = array(1,2);
+            if ($this->ion_auth->in_group($group3))
+            {
+                redirect('Events/responde_evento/'.$id.'/add');
+            }
+            else
+            {
+                $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
+                redirect('/', 'refresh'); 
+            }
             
         //$id es el id del evento a responder
         // codigo para el multiselect del cie10:
@@ -212,99 +257,109 @@ class Events extends CI_Controller
         } 
         else
         {
-            redirect('Home/denied', 'refresh');
+            $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
+            redirect('/', 'refresh'); 
         }
         
     }
     
     function responde_evento($id)
     {
-        //echo 'respondes evento con id ' . $id;
-        $data['evento'] = $this->momv->detalle_evento($id);
-        $data['page'] = 'Responde - Evento';
-        
-        $crud = new grocery_CRUD();
-        $crud->set_subject('Responder');
-        $crud->set_table('respuesta');
-        
-        
-        $crud->set_field_upload('adjunto1','assets/uploads/files/respuesta');      
-        $crud->set_field_upload('adjunto2','assets/uploads/files/respuesta');      
-        $crud->set_field_upload('adjunto3','assets/uploads/files/respuesta');      
-        $crud->set_field_upload('adjunto4','assets/uploads/files/respuesta');      
-        $crud->set_field_upload('adjunto5','assets/uploads/files/respuesta');
-        
-        $crud->columns('id_evento', 'respuesta', 'fecha_respuesta', 'registrado_por');
-
-        //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
-        //$crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
-
-        // Labels de columnas
-        //$crud->display_as('id_evento', 'Cod. Evento');
-        $crud->display_as('respuesta', 'Ingrese su respuesta');
-        //$crud->display_as('fecha_respuesta', 'Se Respondió el');
-        $crud->display_as('cie10', 'Código CIE10');
-        $crud->display_as('adjunto1', 'Archivo Adjunto');
-        $crud->display_as('adjunto2', 'Archivo Adjunto');
-        $crud->display_as('adjunto3', 'Archivo Adjunto');
-        $crud->display_as('adjunto4', 'Archivo Adjunto');
-        $crud->display_as('adjunto5', 'Archivo Adjunto');
-        
-        //$crud->display_as('estado', 'Segundo Nombre');
-        $user = $this->ion_auth->user()->row();
-        $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
-
-        $crud->field_type('cie10', 'multiselect', $this->momv->cie10());
-
-        //$id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
-
-        //$crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
-        
-        $crud->field_type('id_evento', 'hidden', $id);
-        $crud->field_type('registrado_por', 'hidden', $admin);
-
-        // Campos obligatorios
-        $crud->required_fields('respuesta');
-
-        $crud->add_fields('id_evento', 'respuesta', 'registrado_por', 'cie10', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
-        $crud->edit_fields('respuesta', 'registrado_por', 'cie10', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
-
-        if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+        $group3 = array(1,2);
+        if ($this->ion_auth->in_group($group3))
         {
-            $crud->unset_delete();
-        }
-            //a continuacion dejo los callbacks para las funciones del crud
-            //########################## Importantes  ##############################
-            //$crud->callback_insert(array($this, 'create_event_callback'));
-            //$crud->callback_update(array($this, 'edit_event_callback'));
-            //$crud->callback_delete(array($this, 'delete_event_callback'));
-            $crud->callback_after_insert(array($this, 'actualizo_evento'));
-            //######################################################################
-        
-        // Pintado de formulario y creación de vista
-        
-        $crud->unset_print();
-        //$crud->unset_read();
-        $crud->unset_back_to_list();
-        
-        $crud->set_lang_string('insert_success_message','Gracias por su respuesta<br/>
-         <script type="text/javascript">
-          window.location = "'.site_url(strtolower('home').'/'.strtolower('index')).'";
-         </script>
-         <div style="display:none">
-         '
-         );
-         
-         
-        $output = $crud->render();
+            //echo 'respondes evento con id ' . $id;
+            $data['evento'] = $this->momv->detalle_evento($id);
+            $data['page'] = 'Responde - Evento';
 
-        
-        $this->load->view('layout/header', $data);
-        $this->load->view('layout/navigation', $data);
-        
-        $this->load->view('events/consulta', $data); //agrego una vista para mostrar la consulta realizada
-        $this->load->view('events/responde_evento', $output);
-        $this->load->view('layout/footer', $data);
+            $crud = new grocery_CRUD();
+            $crud->set_subject('Responder');
+            $crud->set_table('respuesta');
+
+
+            $crud->set_field_upload('adjunto1','assets/uploads/files/respuesta');      
+            $crud->set_field_upload('adjunto2','assets/uploads/files/respuesta');      
+            $crud->set_field_upload('adjunto3','assets/uploads/files/respuesta');      
+            $crud->set_field_upload('adjunto4','assets/uploads/files/respuesta');      
+            $crud->set_field_upload('adjunto5','assets/uploads/files/respuesta');
+
+            $crud->columns('id_evento', 'respuesta', 'fecha_respuesta', 'registrado_por');
+
+            //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
+            //$crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
+
+            // Labels de columnas
+            //$crud->display_as('id_evento', 'Cod. Evento');
+            $crud->display_as('respuesta', 'Ingrese su respuesta');
+            //$crud->display_as('fecha_respuesta', 'Se Respondió el');
+            $crud->display_as('cie10', 'Código CIE10');
+            $crud->display_as('adjunto1', 'Archivo Adjunto');
+            $crud->display_as('adjunto2', 'Archivo Adjunto');
+            $crud->display_as('adjunto3', 'Archivo Adjunto');
+            $crud->display_as('adjunto4', 'Archivo Adjunto');
+            $crud->display_as('adjunto5', 'Archivo Adjunto');
+
+            //$crud->display_as('estado', 'Segundo Nombre');
+            $user = $this->ion_auth->user()->row();
+            $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
+
+            $crud->field_type('cie10', 'multiselect', $this->momv->cie10());
+
+            //$id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
+
+            //$crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
+
+            $crud->field_type('id_evento', 'hidden', $id);
+            $crud->field_type('registrado_por', 'hidden', $admin);
+
+            // Campos obligatorios
+            $crud->required_fields('respuesta');
+
+            $crud->add_fields('id_evento', 'respuesta', 'registrado_por', 'cie10', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
+            $crud->edit_fields('respuesta', 'registrado_por', 'cie10', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
+
+            if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+            {
+                $crud->unset_delete();
+            }
+                //a continuacion dejo los callbacks para las funciones del crud
+                //########################## Importantes  ##############################
+                //$crud->callback_insert(array($this, 'create_event_callback'));
+                //$crud->callback_update(array($this, 'edit_event_callback'));
+                //$crud->callback_delete(array($this, 'delete_event_callback'));
+                $crud->callback_after_insert(array($this, 'actualizo_evento'));
+                //######################################################################
+
+            // Pintado de formulario y creación de vista
+
+            $crud->unset_print();
+            //$crud->unset_read();
+            $crud->unset_back_to_list();
+
+            $crud->set_lang_string('insert_success_message','Gracias por su respuesta<br/>
+             <script type="text/javascript">
+              window.location = "'.site_url(strtolower('home').'/'.strtolower('index')).'";
+             </script>
+             <div style="display:none">
+             '
+             );
+
+
+            $output = $crud->render();
+
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('layout/navigation', $data);
+
+            $this->load->view('events/consulta', $data); //agrego una vista para mostrar la consulta realizada
+            $this->load->view('events/responde_evento', $output);
+            $this->load->view('layout/footer', $data);
+        }
+        else
+        {
+            $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
+            redirect('/', 'refresh'); 
+        }
     }
     
     function actualizo_evento($post_array)

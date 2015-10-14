@@ -95,7 +95,7 @@ class Home extends CI_Controller
 
     function denied()
     {
-        echo '<center><h1>Error</h1></center>';
+        echo '<center><h2>Error</h2></center>';
     }
 
 }

@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script src="<?php echo base_url() ?>/includes/js/jquery.min.js"></script>
         <script src="<?php echo base_url() ?>/includes/js/bootstrap.min.js"></script>
         <div class="container">
-            <div id="logoacr" bgcolor="#003399" height="110px">
+            <div id="logoacr">
                 <img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" height="110px"/>
             </div>
             <nav class="navbar navbar-default">
@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="#">Orientación Médica Virtual</a>
+                            <a class="navbar-brand" href="<?php echo site_url('/');?>">Orientación Médica Virtual</a>
                     </div>
                     <div id="navbar-collapsed1" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">

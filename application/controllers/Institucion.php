@@ -25,7 +25,8 @@ class Institucion extends CI_Controller
             }
             else
             {
-                redirect('Home/denied','refresh'); // mostramos mensaje de error
+                $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
+                redirect('/', 'refresh');
             }
         }
         else
@@ -36,42 +37,51 @@ class Institucion extends CI_Controller
     
     public function view()
     {
-        $data['page'] = 'Institucion Educativa';
+        $group = 1;
+        if($this->ion_auth->in_group($group))
+        {
+            $data['page'] = 'Institucion Educativa';
 
-        // Inicialización CRUD
-        $crud = new grocery_CRUD();
-        $crud->set_subject('Institución Educativa');
-        $crud->set_table('institucion_educativa');        
-        $crud->columns('id_institucion', 'nombre_institucion', 'poliza_institucion', 'fecha_registro','registrado_por','estado');
+            // Inicialización CRUD
+            $crud = new grocery_CRUD();
+            $crud->set_subject('Institución Educativa');
+            $crud->set_table('institucion_educativa');        
+            $crud->columns('id_institucion', 'nombre_institucion', 'poliza_institucion', 'fecha_registro','registrado_por','estado');
 
-        // Labels de columnas
-        $crud->display_as('id_institucion', 'NIT. Institución');
-        $crud->display_as('nombre_institucion', 'Nombre Institución');
-        $crud->display_as('poliza_institucion', 'Número de Poliza');
-        //$crud->display_as('estado', 'Segundo Nombre');
-        $user = $this->ion_auth->user()->row();
-        $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
-        
-        $crud->field_type('registrado_por', 'hidden', $admin);
+            // Labels de columnas
+            $crud->display_as('id_institucion', 'NIT. Institución');
+            $crud->display_as('nombre_institucion', 'Nombre Institución');
+            $crud->display_as('poliza_institucion', 'Número de Poliza');
+            //$crud->display_as('estado', 'Segundo Nombre');
+            $user = $this->ion_auth->user()->row();
+            $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
 
-        // Campos obligatorios
-        $crud->required_fields('id_institucion','nombre_institucion','poliza_institucion');
-        $crud->add_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por'); // con add establecemos los campos para el formulario
-        $crud->edit_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por');
-        // Validación de campos
-        //$crud->set_rules('id_number', 'No. Identificación', 'integer');
-        
-        if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
-	{
-            $crud->unset_delete();
+            $crud->field_type('registrado_por', 'hidden', $admin);
+
+            // Campos obligatorios
+            $crud->required_fields('id_institucion','nombre_institucion','poliza_institucion');
+            $crud->add_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por'); // con add establecemos los campos para el formulario
+            $crud->edit_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por');
+            // Validación de campos
+            //$crud->set_rules('id_number', 'No. Identificación', 'integer');
+
+            if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+            {
+                $crud->unset_delete();
+            }
+
+            // Pintado de formulario y creación de vista
+            $output = $crud->render();
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('layout/navigation', $data);
+            $this->load->view('Institucion/list', $output);
+            $this->load->view('layout/footer', $data);
         }
-        
-        // Pintado de formulario y creación de vista
-        $output = $crud->render();
-
-        $this->load->view('layout/header', $data);
-        $this->load->view('layout/navigation', $data);
-        $this->load->view('Institucion/list', $output);
-        $this->load->view('layout/footer', $data);
+        else
+        {
+            $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
+            redirect('/', 'refresh');
+        }        
     }
 }

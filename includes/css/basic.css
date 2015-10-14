@@ -45,3 +45,10 @@ a:hover > .mini-container h5 {
     font-size: small;
     text-align: center;
 }
+
+#logoacr{
+    background-color: #042473;    
+    padding: 20px;
+    height: 150px;
+    
+}

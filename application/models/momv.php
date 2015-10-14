@@ -63,7 +63,36 @@ class Momv extends CI_Model
         $id_institucion = $user->id_institucion_ed;
 
         $query = $this->db->where('institution', $id_institucion)->get('patients');
+        
+        //$str = $this->db->last_query();
+        //log_message('ERROR', 'Seguimiento a pacientes en creacion de evento ' . $str);		
 
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $key)
+            {
+                $data[$key->id_number] = $key->last_name . ' - ' . $key->first_name;
+            }
+            $this->db->trans_complete();
+            return $data;
+        } 
+        else
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+        $this->db->trans_complete();
+    }
+    
+    function paciente_evento_responde()
+    {
+        $this->db->trans_start();
+
+        $user = $this->ion_auth->user()->row();
+        $id_institucion = $user->id_institucion_ed;
+
+        //$query = $this->db->where('institution', $id_institucion)->get('patients');
+        $query = $this->db->get('patients');
         //$str = $this->db->last_query();
         //log_message('ERROR', 'Seguimiento a pacientes en creacion de evento ' . $str);		
 
@@ -207,11 +236,13 @@ class Momv extends CI_Model
         $this->db->select('e.id_evento, e.descripcion, e.fecha_evento, e.institucion_edu_id, e.estado,
                             e.adjunto1 as eadj1, e.adjunto2 as eadj2, e.adjunto3 as eadj3, e.adjunto4 as eadj4, e.adjunto5 as eadj5,
                             r.respuesta, r.cie10, r.fecha_respuesta, r.registrado_por,
-                            r.adjunto1 as radj1, r.adjunto2 as radj2, r.adjunto3 as radj3, r.adjunto4 as radj4, r.adjunto5 as radj5')
-                ->from('evento e, respuesta r')
-                ->where('paciente_id = (select id_number from patients where id='.$id.')')
+                            r.adjunto1 as radj1, r.adjunto2 as radj2, r.adjunto3 as radj3, r.adjunto4 as radj4, r.adjunto5 as radj5, p.*')
+                ->from('evento e, respuesta r, patients p')
+                ->where('paciente_id = p.id_number')
+                ->where('p.id',$id)
                 ->where('e.estado = "Finalizado"')
-                ->where('r.id_evento = e.id_evento');
+                ->where('r.id_evento = e.id_evento')
+                ->order_by('e.fecha_evento', 'DESC');
         
         $query = $this->db->get('');
         
