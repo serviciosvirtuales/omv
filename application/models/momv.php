@@ -259,4 +259,26 @@ class Momv extends CI_Model
         
         $this->db->trans_complete();
     }
+    
+    function email_evento($registrado_por){
+        $this->db->trans_start();
+
+        $query = $this->db->select('email')
+                ->where('id', $registrado_por)
+                ->get('users');
+
+        if ($query->num_rows() > 0) 
+        {
+            $row = $query->row(); 
+            $this->db->trans_complete();            
+            return $row->email;
+        } 
+        else 
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+
+        $this->db->trans_complete();
+    }
 }

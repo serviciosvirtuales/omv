@@ -103,6 +103,9 @@ class Events extends CI_Controller
                 //$crud->callback_delete(array($this, 'delete_event_callback'));
                 //$crud->callback_after_insert(array($this, 'adjuntos_evento')); // no se requiere ya que se daña la carga si los adjuntos estan en tablas separadas
                 //######################################################################
+            //###########  CORREO  ##############
+            $crud->callback_after_insert(array($this, 'mail_newEvento'));
+            //###########  CORREO  ##############
             $crud->unset_back_to_list();
             $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
                                     <script type="text/javascript">
@@ -126,7 +129,76 @@ class Events extends CI_Controller
             $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
             redirect('/', 'refresh');
         }
-    }    
+    }
+    
+    function mail_newEvento($post_array, $primary_key = null){
+    
+        //consultar el correo con el id de la pregunta
+        $registrado_por = $post_array['registrado_por'];
+        $email = $this->momv->email_evento($registrado_por);
+        
+        if(!$email){
+            redirect('home/denied');
+        }
+        
+        //cargamos la libreria email de ci
+        $this->load->library("email");
+
+        //$email = $post_array['registrado_por'];
+        //$email = 'dt@fsfb.edu.co';
+        //$respuesta_e = $post_array['respuesta'];
+
+        //configuracion para gmail
+        /*
+        $configGmail = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'desarrollos@fsfb.edu.co',
+            'smtp_pass' => 'admfsfb2008',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n");*/
+        $configGmail = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.mailgun.org',
+            'smtp_port' => 465,
+            'smtp_user' => 'postmaster@sandbox224cc937f61d42948cc7e944f56c4694.mailgun.org',
+            'smtp_pass' => '1c0e062dbc4ffaea11496eca3c905ccf',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n");
+        
+        //cargamos la configuración para enviar con gmail
+        $this->email->initialize($configGmail);
+
+        $this->email->from('OMV');
+        $this->email->to($email);
+        $this->email->subject('Evento OMV');
+        $this->email->message('<h2>Se ha creado un nuevo evento</h2><hr>espere nuestra respuesta                                                                
+                ');
+
+        //$this->email->print_debugger();
+
+        $this->email->send();
+
+        if (!$this->email->send())
+        {
+            //var_dump($this->email->print_debugger());
+            log_message('ERROR', ' No Envió correo con respuesta a --> ' . $email);
+        } 
+        else
+        {
+            log_message('ERROR', 'Envió correo a --> ' . $email);
+        }
+
+        //con esto podemos ver el resultado
+        //var_dump($this->email->print_debugger());
+        //log_message('error', 'error de correo '.$errores );
+        //Echo "Correo Enviado Exitosamente";
+        return TRUE;
+    
+    }
     
     public function listado()
     {
