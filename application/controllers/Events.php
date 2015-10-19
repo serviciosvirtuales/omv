@@ -77,7 +77,7 @@ class Events extends CI_Controller
             $user = $this->ion_auth->user()->row();
             $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
 
-            $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
+            //$crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
 
             $id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
 
@@ -91,10 +91,14 @@ class Events extends CI_Controller
             $crud->add_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
             $crud->edit_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
 
-            if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
+            if (!$this->ion_auth->is_admin()) // si no es admin no puede eliminar y consulta sus pacientes
             {
                 $crud->unset_delete();
-
+                $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
+            }
+            else // es admin consulta todos los pacientes
+            {
+                $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento_admin());
             }
                 //a continuacion dejo los callbacks para las funciones del crud
                 //########################## Importantes  ##############################
@@ -139,15 +143,12 @@ class Events extends CI_Controller
         
         if(!$email){
             redirect('home/denied');
-        }
-        
+        }        
         //cargamos la libreria email de ci
         $this->load->library("email");
-
         //$email = $post_array['registrado_por'];
         //$email = 'dt@fsfb.edu.co';
         //$respuesta_e = $post_array['respuesta'];
-
         //configuracion para gmail
         /*
         $configGmail = array(
@@ -158,7 +159,8 @@ class Events extends CI_Controller
             'smtp_pass' => 'admfsfb2008',
             'mailtype' => 'html',
             'charset' => 'utf-8',
-            'newline' => "\r\n");*/
+            'newline' => "\r\n");
+         */
         $configGmail = array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.mailgun.org',
@@ -175,8 +177,7 @@ class Events extends CI_Controller
         $this->email->from('OMV');
         $this->email->to($email);
         $this->email->subject('Evento OMV');
-        $this->email->message('<h2>Se ha creado un nuevo evento</h2><hr>espere nuestra respuesta                                                                
-                ');
+        $this->email->message('<h2>Se ha creado un nuevo evento</h2><hr>espere nuestra respuesta');
 
         //$this->email->print_debugger();
 
@@ -196,8 +197,7 @@ class Events extends CI_Controller
         //var_dump($this->email->print_debugger());
         //log_message('error', 'error de correo '.$errores );
         //Echo "Correo Enviado Exitosamente";
-        return TRUE;
-    
+        return TRUE;    
     }
     
     public function listado()

@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script src="<?php echo base_url() ?>/includes/js/bootstrap.min.js"></script>
         <div class="container">
             <div id="logoacr">
-                <img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" height="110px"/>
+                <img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" width="200"/>
             </div>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">

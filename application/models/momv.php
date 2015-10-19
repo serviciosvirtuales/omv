@@ -84,6 +84,35 @@ class Momv extends CI_Model
         $this->db->trans_complete();
     }
     
+    function paciente_evento_admin()
+    {
+        $this->db->trans_start();
+
+        $user = $this->ion_auth->user()->row();
+        $id_institucion = $user->id_institucion_ed;
+
+        $query = $this->db->get('patients');
+        
+        //$str = $this->db->last_query();
+        //log_message('ERROR', 'Seguimiento a pacientes en creacion de evento ' . $str);		
+
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $key)
+            {
+                $data[$key->id_number] = $key->last_name . ' - ' . $key->first_name;
+            }
+            $this->db->trans_complete();
+            return $data;
+        } 
+        else
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+        $this->db->trans_complete();
+    }
+    
     function paciente_evento_responde()
     {
         $this->db->trans_start();
