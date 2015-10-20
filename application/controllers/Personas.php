@@ -142,8 +142,7 @@ class Personas extends CI_Controller
             $data = array(
                 'username' => $username,
                 'email' => $email,
-                'password' => $post_array['password'],
-                'id_especialidad' => $post_array['id_especialidad'],
+                'password' => $post_array['password'],                
                 'first_name' => $post_array['first_name'],
                 'last_name' => $post_array['last_name'],
                 'id_institucion_ed' =>$post_array['id_institucion_ed']
@@ -177,15 +176,80 @@ class Personas extends CI_Controller
             );
             //$group =  array('2');	//2 es el grupo de los usuarios de entidad
             $group = array($post_array['rol']);
-            $this->ion_auth_model->register($username, $password, $email, $data, $group);
-
-            return $this->db->insert_id();
+            if($this->ion_auth_model->register($username, $password, $email, $data, $group))
+            {
+                //antes de retornar el id, envio el correo
+                log_message('ERROR', 'AQUI Envio El CORREO');
+                //###########  CORREO  ##############
+                $this->mail_newUser($password, $email);
+                //###########  CORREO  ##############
+                return $this->db->insert_id();
+            }
+            else
+            {
+                return FALSE;
+            }
         }
         else
         {
             $this->session->set_flashdata('message', 'No tiene Permisos para acceder a este lugar');
             redirect('/', 'refresh');
         }
+    }
+    
+    function mail_newUser($password, $email){
+                   
+        //cargamos la libreria email de ci
+        $this->load->library("email");
+        
+        /*
+        $configGmail = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'desarrollos@fsfb.edu.co',
+            'smtp_pass' => 'admfsfb2008',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n");
+         */
+        $configGmail = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.mailgun.org',
+            'smtp_port' => 465,
+            'smtp_user' => 'postmaster@sandbox224cc937f61d42948cc7e944f56c4694.mailgun.org',
+            'smtp_pass' => '1c0e062dbc4ffaea11496eca3c905ccf',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n");
+        
+        //cargamos la configuración para enviar con gmail
+        $this->email->initialize($configGmail);
+
+        $this->email->from('OMV');
+        $this->email->to($email);
+        $this->email->subject('Nuevo Usuario Registrado');
+        $this->email->message('<h2>Bienvenido a OMV</h2><hr>Su usuario es su correo '.$email.'<br> Y su contraseña es '.$password);
+
+        //$this->email->print_debugger();
+
+        $this->email->send();
+
+        if (!$this->email->send())
+        {
+            //var_dump($this->email->print_debugger());
+            log_message('ERROR', ' No Envió correo con respuesta a --> ' . $email);
+        } 
+        else
+        {
+            log_message('ERROR', 'Envió correo a --> ' . $email);
+        }
+
+        //con esto podemos ver el resultado
+        //var_dump($this->email->print_debugger());
+        //log_message('error', 'error de correo '.$errores );
+        //Echo "Correo Enviado Exitosamente";
+        return TRUE;    
     }
 
 }

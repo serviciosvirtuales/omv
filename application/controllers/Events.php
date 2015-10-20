@@ -439,9 +439,76 @@ class Events extends CI_Controller
         //log_message('ERROR', 'actualizo evento id '.$post_array['id_evento']);
         $id = $post_array['id_evento'];
         
-        $this->momv->actualizo_evento($id);
-                
-        return TRUE;
-    }    
+        if($this->momv->actualizo_evento($id))
+            {
+                //antes de retornar, envio el correo
+                log_message('ERROR', 'AQUI Envio El CORREO respuesta a evento');
+                //###########  CORREO  ##############
+                $this->mail_newRespuesta($id); //envio ID del evento
+                return TRUE;
+            }
+            else
+            {
+                return FALSE;
+            }
+    }
+    
+    function mail_newRespuesta($id){ //Recibimos el id del evento que se responde
+                   
+        //debemos consultar el correo de la persona que realizo la consulta para enviar el correo de respuesta
+        $email = $this->momv->email_evento_id($id);
+        //cargamos la libreria email de ci
+        $this->load->library("email");
+        
+        /*
+        $configGmail = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'desarrollos@fsfb.edu.co',
+            'smtp_pass' => 'admfsfb2008',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n");
+         */
+        $configGmail = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.mailgun.org',
+            'smtp_port' => 465,
+            'smtp_user' => 'postmaster@sandbox224cc937f61d42948cc7e944f56c4694.mailgun.org',
+            'smtp_pass' => '1c0e062dbc4ffaea11496eca3c905ccf',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n");
+        
+        //cargamos la configuración para enviar con gmail
+        $this->email->initialize($configGmail);
+
+        $this->email->from('OMV');
+        $this->email->to($email);
+        $this->email->subject('Han respondido un evento');
+        $this->email->message('<h2>OMV</h2><hr>Se ha respondido a un evento que ud realizo en la plataforma');
+
+        //$this->email->print_debugger();
+
+        $this->email->send();
+
+        if (!$this->email->send())
+        {
+            //var_dump($this->email->print_debugger());
+            log_message('ERROR', ' No Envió correo con respuesta a --> ' . $email);
+        } 
+        else
+        {
+            log_message('ERROR', 'Envió correo a --> ' . $email);
+            return TRUE; 
+        }
+
+        //con esto podemos ver el resultado
+        //var_dump($this->email->print_debugger());
+        //log_message('error', 'error de correo '.$errores );
+        //Echo "Correo Enviado Exitosamente";
+        return TRUE;    
+    }
     
 }

@@ -16,6 +16,7 @@ $lang['email_no_smtp_unpw'] = "Error: Debes asignar un usuario y contraseña par
 $lang['email_failed_smtp_login'] = "Falló enviando el comando AUTH LOGIN. Error: %s";
 $lang['email_smtp_auth_un'] = "Falló autentificando el usuario. Error: %s";
 $lang['email_smtp_auth_pw'] = "Falló usando la contraseña. Error: %s";
+$lang['email_no_from'] = "este mensaje no deberia salir OMV";
 $lang['email_smtp_data_failure'] = "No se han podido enviar los datos: %s";
 /* New in 1.6 or Higher  */
 $lang['email_exit_status'] = "Código de estado de salida: %s";
