@@ -28,7 +28,12 @@
                         <a href="#">Recursos</a>
                     </li>               
                 </ul>
-                        <?php if ($this->ion_auth->logged_in()) {echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('home/logout').'">Salir</a></li></ul>';} ?>
+                        <?php if ($this->ion_auth->logged_in()) {
+                            
+                            echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('home/logout').'">Salir</a></li></ul>';
+                            echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('ConfigEmail').'">Configurar Correos</a></li></ul>';
+                                                        
+                        } ?>
             </div>
     	</div>
     </nav>

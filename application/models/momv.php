@@ -211,9 +211,9 @@ class Momv extends CI_Model
 
         $this->db->update('evento', $data);
         
-        return TRUE;
-
         $this->db->trans_complete(); // manejo transacciones fin
+        
+        return TRUE;
     }
     
     /*
@@ -327,6 +327,27 @@ class Momv extends CI_Model
             
             $email = $this->email_evento($row->registrado_por);
             return $email;
+        } 
+        else 
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+
+        $this->db->trans_complete();
+    }
+    
+    function emailEspecialistas()
+    {
+        $this->db->trans_start();
+
+        $query = $this->db->select('email')                
+                ->get('configemail');
+
+        if ($query->num_rows() > 0) 
+        {            
+            $this->db->trans_complete();            
+            return $query;
         } 
         else 
         {

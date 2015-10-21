@@ -107,9 +107,12 @@ class Events extends CI_Controller
                 //$crud->callback_delete(array($this, 'delete_event_callback'));
                 //$crud->callback_after_insert(array($this, 'adjuntos_evento')); // no se requiere ya que se daña la carga si los adjuntos estan en tablas separadas
                 //######################################################################
+                
+            
             //###########  CORREO  ##############
             $crud->callback_after_insert(array($this, 'mail_newEvento'));
             //###########  CORREO  ##############
+            
             $crud->unset_back_to_list();
             $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
                                     <script type="text/javascript">
@@ -138,66 +141,113 @@ class Events extends CI_Controller
     function mail_newEvento($post_array, $primary_key = null){
     
         //consultar el correo con el id de la pregunta
-        $registrado_por = $post_array['registrado_por'];
-        $email = $this->momv->email_evento($registrado_por);
+        //$registrado_por = $post_array['registrado_por'];
+        //$email = $this->momv->email_evento($registrado_por); //necesito enviar el correo a todos los especialistas
+        
+        $email = $this->momv->emailEspecialistas();
+               
         
         if(!$email){
-            redirect('home/denied');
-        }        
-        //cargamos la libreria email de ci
-        $this->load->library("email");
-        //$email = $post_array['registrado_por'];
-        //$email = 'dt@fsfb.edu.co';
-        //$respuesta_e = $post_array['respuesta'];
-        //configuracion para gmail
-        /*
-        $configGmail = array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.gmail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'desarrollos@fsfb.edu.co',
-            'smtp_pass' => 'admfsfb2008',
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n");
-         */
-        $configGmail = array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.mailgun.org',
-            'smtp_port' => 465,
-            'smtp_user' => 'postmaster@sandbox224cc937f61d42948cc7e944f56c4694.mailgun.org',
-            'smtp_pass' => '1c0e062dbc4ffaea11496eca3c905ccf',
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n");
-        
-        //cargamos la configuración para enviar con gmail
-        $this->email->initialize($configGmail);
-
-        $this->email->from('OMV');
-        $this->email->to($email);
-        $this->email->subject('Evento OMV');
-        $this->email->message('<h2>Se ha creado un nuevo evento</h2><hr>espere nuestra respuesta');
-
-        //$this->email->print_debugger();
-
-        $this->email->send();
-
-        if (!$this->email->send())
-        {
-            //var_dump($this->email->print_debugger());
-            log_message('ERROR', ' No Envió correo con respuesta a --> ' . $email);
-        } 
-        else
-        {
-            log_message('ERROR', 'Envió correo a --> ' . $email);
+            log_message('ERROR', ' No se encontro correo electronico para enviar a los especialistas');
+            return TRUE;
         }
+        
+        foreach ($email->result() as $correo)
+        {
+            //cargamos la libreria email de ci
+            $this->load->library("email");
+            //$email = $post_array['registrado_por'];
+            //$email = 'dt@fsfb.edu.co';
+            //$respuesta_e = $post_array['respuesta'];
+            //configuracion para gmail
+            /*
+            $configGmail = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.gmail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'desarrollos@fsfb.edu.co',
+                'smtp_pass' => 'admfsfb2008',
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'newline' => "\r\n");
+             */
+            $configGmail = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.mailgun.org',
+                'smtp_port' => 465,
+                'smtp_user' => 'postmaster@sandbox224cc937f61d42948cc7e944f56c4694.mailgun.org',
+                'smtp_pass' => '1c0e062dbc4ffaea11496eca3c905ccf',
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'newline' => "\r\n");
 
-        //con esto podemos ver el resultado
-        //var_dump($this->email->print_debugger());
-        //log_message('error', 'error de correo '.$errores );
-        //Echo "Correo Enviado Exitosamente";
-        return TRUE;    
+            //cargamos la configuración para enviar con gmail
+            $this->email->initialize($configGmail);
+
+            $this->email->from('OMV');
+            $this->email->to($correo->email);
+            $this->email->subject('Alerta - Evento en Servicio de Orientación Médica Virtual');
+            $this->email->message('<body style="margin:0; padding: 0; border:0;">
+                <table class="wrapper" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family: Helvetica, Arial, sans-serif; font-size: 90%; color: #555;">
+                    <tr>
+                            <td align="center">
+                                    <table class="content" cellpadding="0" cellspacing="0" border="0" width="600">
+                                            <tr><td width="100%" bgcolor="#042473">
+                                                    <table cellpadding="20">
+                                                            <tr>
+                                                                    <td width="100%" bgcolor="#042473">
+                                                                            <img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" width="200" style="display:block;">
+                                                                    </td>
+                                                            </tr>
+                                                    </table>
+                                            </td></tr>
+                                            <tr>
+                                                    <td>
+                                                            <img src="http://173.192.217.154/omv/includes/img/banner3.jpg" style="display:block;">
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <td>
+                                                            <h1>Se ha registrado un nuevo evento en el Servicio de Orientación Médica Virtual</h1>
+                                                            <br />
+                                                            <p><strong>Importante</strong> - Se ha registrado un nuevo evento en el Sistema de Orientación Médica Virtual. Para acceder al sistema y contestar este evento, puede dirigirse a <a href="#">https://fsfb.edu.co/omv/</a>. Debe recordar que el tiempo de contacto con la institución remisora no debe superar los 15 minutos desde la recepción de este correo.</p>
+                                                            <p>Puede saber más del Servicio, ingresando a <a href="#">esta página.</a></p>
+                                                            <p>Si tiene más preguntas, puede comunicarse con Servicios Virtuales al correo electrónico <a href="mailto:servicios.virtuales@fsfb.edu.co">servicios.virtuales@fsfb.edu.co</a> o llamando al teléfono (1) 6030303 extensión 5724.</p>
+                                                            <br />
+                                                            <p><strong>El Equipo de Servicios Virtuales</strong><br />Fundación Santa Fe de Bogotá</p><br />
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <td style="font-size:50%">Todos los derechos reservados, Fundación Santa Fe de Bogotá. 
+                                                            Evite imprimir, piense en su compromiso con el medio ambiente.</td>
+                                            </tr>
+                                    </table>
+                            </td>
+                    </tr>
+                </table>
+            </body>');
+
+            //$this->email->print_debugger();
+
+            $this->email->send();
+
+            if (!$this->email->send())
+            {
+                //var_dump($this->email->print_debugger());
+                log_message('ERROR', ' No Envió correo con respuesta a --> ' .$correo->email);
+            } 
+            else
+            {
+                log_message('ERROR', 'Envió correo a --> ' .$correo->email);
+            }
+
+            //con esto podemos ver el resultado
+            //var_dump($this->email->print_debugger());
+            //log_message('error', 'error de correo '.$errores );
+            //Echo "Correo Enviado Exitosamente";
+              
+        }//foreach email
+        return TRUE;
     }
     
     public function listado()
@@ -486,8 +536,46 @@ class Events extends CI_Controller
 
         $this->email->from('OMV');
         $this->email->to($email);
-        $this->email->subject('Han respondido un evento');
-        $this->email->message('<h2>OMV</h2><hr>Se ha respondido a un evento que ud realizo en la plataforma');
+        $this->email->subject('Respuesta del Servicio de Orientación Médica Virtual');
+        $this->email->message('<body style="margin:0; padding: 0; border:0;">
+	<table class="wrapper" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family: Helvetica, Arial, sans-serif; font-size: 90%; color: #555;">
+		<tr>
+			<td align="center">
+				<table class="content" cellpadding="0" cellspacing="0" border="0" width="600">
+					<tr><td width="100%" bgcolor="#042473">
+						<table cellpadding="20">
+							<tr>
+								<td width="100%" bgcolor="#042473">
+									<img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" width="200" style="display:block;">
+								</td>
+							</tr>
+						</table>
+					</td></tr>
+					<tr>
+						<td>
+							<img src="http://173.192.217.154/omv/includes/img/banner3.jpg" style="display:block;">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h1>Ya puede acceder a la respuesta del Servicio de Orientación Médica Virtual</h1>
+							<br />
+							<p><strong>Importante</strong> - Ya puede acceder para ver la respuesta a su consulta en el Servicio de Orientación Médica Virtual. Para acceder al sistema y ver la respuesta a este evento, puede dirigirse a <a href="#">https://fsfb.edu.co/omv/</a>. Puede acceder con su usuario y contraseña registrada y seleccionar "Ver consultas pasadas" en el menú principal.</p>
+							<p>Puede saber más del Servicio, ingresando a <a href="#">esta página.</a></p>
+							<p>Si tiene más preguntas, puede comunicarse con Servicios Virtuales al correo electrónico <a href="mailto:servicios.virtuales@fsfb.edu.co">servicios.virtuales@fsfb.edu.co</a> o llamando al teléfono (1) 6030303 extensión 5724.</p>
+							<br />
+							<p><strong>El Equipo de Servicios Virtuales</strong><br />Fundación Santa Fe de Bogotá</p><br />
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size:70%">Todos los derechos reservados, Fundación Santa Fe de Bogotá. 
+							Evite imprimir, piense en su compromiso con el medio ambiente.</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>');
 
         //$this->email->print_debugger();
 
