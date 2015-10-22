@@ -218,7 +218,7 @@ class Events extends CI_Controller
                                                     </td>
                                             </tr>
                                             <tr>
-                                                    <td style="font-size:50%">Todos los derechos reservados, Fundación Santa Fe de Bogotá. 
+                                                    <td style="font-size:70%">Todos los derechos reservados, Fundación Santa Fe de Bogotá. 
                                                             Evite imprimir, piense en su compromiso con el medio ambiente.</td>
                                             </tr>
                                     </table>

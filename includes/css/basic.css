@@ -25,7 +25,8 @@ a:hover > .mini-container h5 {
 
 .footer-omv {
     padding: 10px 15px;
-    background-color: #042473;
+    /*background-color: #042473;*/
+    background-color: #1C3F94;
     border-top: 1px solid #ddd;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -47,7 +48,8 @@ a:hover > .mini-container h5 {
 }
 
 #logoacr{
-    background-color: #042473;    
+    /*background-color: #042473;*/
+    background-color: #1C3F94;
     padding: 20px;
     //height: 150px;
     

@@ -72,7 +72,7 @@
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <a href="<?php echo site_url('personas') ?>">
                     <div class="mini-container">
-                        <img src="<?php echo base_url() ?>includes/img/logo_responder.png" style="width: 60px; height: 60px" />
+                        <img src="<?php echo base_url() ?>includes/img/logo_usuarios.png" style="width: 60px; height: 60px" />
                         <h5>Administrar Usuarios</h5>
                     </div>
                 </a>
@@ -87,7 +87,7 @@
             <div class="col-xs-12 col-sm-6 col-md-6">
                 <a href="<?php echo site_url('institucion') ?>">
                     <div class="mini-container">
-                        <img src="<?php echo base_url() ?>includes/img/logo_pacientes.png" style="width: 60px; height: 60px" />
+                        <img src="<?php echo base_url() ?>includes/img/logo_colegios.png" style="width: 60px; height: 60px" />
                         <h5>Administrar Instituciones</h5>
                     </div>
                 </a>

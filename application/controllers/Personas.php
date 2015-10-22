@@ -168,8 +168,7 @@ class Personas extends CI_Controller
             $password = $post_array['password'];
             $email = $post_array['email'];
             $data = array(
-                'phone' => $post_array['phone'],
-                'id_especialidad' => $post_array['id_especialidad'],
+                'phone' => $post_array['phone'],                
                 'first_name' => $post_array['first_name'],
                 'last_name' => $post_array['last_name'],
                 'id_institucion_ed' => $post_array['id_institucion_ed']
@@ -228,10 +227,52 @@ class Personas extends CI_Controller
 
         $this->email->from('OMV');
         $this->email->to($email);
-        $this->email->subject('Nuevo Usuario Registrado');
-        $this->email->message('<h2>Bienvenido a OMV</h2><hr>Su usuario es su correo '.$email.'<br> Y su contraseña es '.$password);
+        $this->email->subject('Bienvenido al Servicio de Orientación Médica Virtual');
+        $this->email->message('<body style="margin:0; padding: 0; border:0;">
+	<table class="wrapper" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family: Helvetica, Arial, sans-serif; font-size: 90%; color: #555;">
+		<tr>
+			<td align="center">
+				<table class="content" cellpadding="0" cellspacing="0" border="0" width="600">
+					<tr><td width="100%" bgcolor="#042473">
+						<table cellpadding="20">
+							<tr>
+								<td width="100%" bgcolor="#042473">
+									<img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" width="200" style="display:block;">
+								</td>
+							</tr>
+						</table>
+					</td></tr>
+					<tr>
+						<td>
+							<img src="http://173.192.217.154/omv/includes/img/banner3.jpg" style="display:block;">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h1>Bienvenido al Servicio de Orientación Médica Virtual</h1>
+							<br />
+							<p>Al registrarse al Servicio de Orientación Médica Virtual, su institución tiene la tranquilidad de contar con el apoyo de los especialistas de la Fundación Santa Fe de Bogotá para guiar casos y educar en salud a su comunidad.</p>
+							<p>Puede saber más del Servicio, ingresando a <a href="#">esta página.</a></p>
+							<p>Si tiene más preguntas, puede comunicarse con Servicios Virtuales al correo electrónico <a href="mailto:servicios.virtuales@fsfb.edu.co">servicios.virtuales@fsfb.edu.co</a> o llamando al teléfono (1) 6030303 extensión 5724.</p>
+                                                        <p> Sus datos de acceso son los siguientes:<br>
+                                                        <label>Usuario: </label>'.$email.'<br>
+                                                            <label>Contraseña: </label>'.$password.'</p> 
+							<br />
+                                                        
+							<p><strong>El Equipo de Servicios Virtuales</strong><br />Fundación Santa Fe de Bogotá</p><br />
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size:70%">Todos los derechos reservados, Fundación Santa Fe de Bogotá. 
+							Evite imprimir, piense en su compromiso con el medio ambiente.</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>');
 
-        //$this->email->print_debugger();
+        $this->email->print_debugger();
 
         $this->email->send();
 
