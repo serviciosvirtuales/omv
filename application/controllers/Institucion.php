@@ -46,22 +46,31 @@ class Institucion extends CI_Controller
             $crud = new grocery_CRUD();
             $crud->set_subject('Institución Educativa');
             $crud->set_table('institucion_educativa');        
-            $crud->columns('id_institucion', 'nombre_institucion', 'poliza_institucion', 'fecha_registro','registrado_por','estado');
+            $crud->columns('id_institucion', 'nombre_institucion', 'poliza_institucion', 'aseguradora', 'fecha_registro','registrado_por','estado');
 
             // Labels de columnas
             $crud->display_as('id_institucion', 'NIT. Institución');
             $crud->display_as('nombre_institucion', 'Nombre Institución');
             $crud->display_as('poliza_institucion', 'Número de Poliza');
+            $crud->display_as('aseguradora', 'Aseguradora');
             //$crud->display_as('estado', 'Segundo Nombre');
             $user = $this->ion_auth->user()->row();
             $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
 
             $crud->field_type('registrado_por', 'hidden', $admin);
+            if(!$this->momv->aseguradoras())
+            {
+                $this->session->set_flashdata('message', 'No han registrado aseguradoras');
+                redirect('/menu'); 
+            }else
+            {
+                $crud->field_type('aseguradora', 'dropdown', $this->momv->aseguradoras());
+            }
 
             // Campos obligatorios
-            $crud->required_fields('id_institucion','nombre_institucion','poliza_institucion');
-            $crud->add_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por'); // con add establecemos los campos para el formulario
-            $crud->edit_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por');
+            $crud->required_fields('id_institucion','nombre_institucion','poliza_institucion', 'aseguradora');
+            $crud->add_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por', 'aseguradora'); // con add establecemos los campos para el formulario
+            $crud->edit_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por', 'aseguradora');
             // Validación de campos
             //$crud->set_rules('id_number', 'No. Identificación', 'integer');
 

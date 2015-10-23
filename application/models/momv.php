@@ -28,6 +28,32 @@ class Momv extends CI_Model
         }
         $this->db->trans_complete();
     }
+    
+    public function aseguradoras()
+    {
+        $this->db->trans_start();
+
+        $query = $this->db->select('id_aseguradora, aseguradora')->from('aseguradora')->order_by("aseguradora", "asc")->get();
+
+        //$str = $this->db->last_query();
+        //log_message('ERROR', 'error CIE10 ' . $str);		
+
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $key)
+            {
+                $data[$key->aseguradora] = $key->aseguradora;
+            }
+            $this->db->trans_complete();
+            return $data;
+        } 
+        else
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+        $this->db->trans_complete();
+    }
 
     function user_institucion() // con esta funcion consultamos a que institucion pertenece el usuario logueado.
     {

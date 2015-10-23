@@ -31,7 +31,13 @@
                         <?php if ($this->ion_auth->logged_in()) {
                             
                             echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('home/logout').'">Salir</a></li></ul>';
-                            echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('ConfigEmail').'">Configurar Correos</a></li></ul>';
+                            if ($this->ion_auth->is_admin())
+                            {
+                                echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('ConfigEmail').'">Configurar Correos</a></li></ul>';
+                                echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('Aseguradora').'">Aseguradoras</a></li></ul>';
+                                
+                                
+                            }
                                                         
                         } ?>
             </div>

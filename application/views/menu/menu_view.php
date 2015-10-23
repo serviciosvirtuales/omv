@@ -1,8 +1,11 @@
+<?php echo "<h2 style='color:#990000;'>".$this->session->flashdata('message')."</h2>";?>  
 <div class="container-fluid">
     
- <?php echo "<h2 class='session'>".$this->session->flashdata('message')."</h2>";?>   
+  
     <div class="row">
+        
         <div class="col-xs-12 col-sm-6 col-md-6">
+            
             <?php
             // 1 admin 2 medico 3 colegio 4 generalUser
             $group = array(1,3);
@@ -14,6 +17,7 @@
                     <div class="mini-container">
                         <img src="<?php echo base_url() ?>includes/img/logo_evento.png" style="width: 60px; height: 60px" />
                         <h5>Crear Evento</h5>
+                        
                     </div>
                 </a>
             </div>
