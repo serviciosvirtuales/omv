@@ -7,7 +7,7 @@ class Institucion extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->output->enable_profiler(TRUE); //profiler para el seguimiento del performance                               
+        //$this->output->enable_profiler(TRUE); //profiler para el seguimiento del performance                               
         
         $this->output->set_header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
         $this->output->set_header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
@@ -46,7 +46,7 @@ class Institucion extends CI_Controller
             $crud = new grocery_CRUD();
             $crud->set_subject('Institución Educativa');
             $crud->set_table('institucion_educativa');        
-            $crud->columns('id_institucion', 'nombre_institucion', 'poliza_institucion', 'aseguradora', 'fecha_registro','registrado_por','estado');
+            $crud->columns('id_institucion', 'nombre_institucion', 'poliza_institucion', 'aseguradora', 'fecha_registro', 'estado');
 
             // Labels de columnas
             $crud->display_as('id_institucion', 'NIT. Institución');

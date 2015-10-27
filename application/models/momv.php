@@ -42,7 +42,7 @@ class Momv extends CI_Model
         {
             foreach ($query->result() as $key)
             {
-                $data[$key->aseguradora] = $key->aseguradora;
+                $data[$key->id_aseguradora] = $key->aseguradora;
             }
             $this->db->trans_complete();
             return $data;
