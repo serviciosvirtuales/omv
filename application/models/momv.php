@@ -54,6 +54,33 @@ class Momv extends CI_Model
         }
         $this->db->trans_complete();
     }
+    
+    function valida_Aseguradora_mail($id)
+    {
+        /*
+         * Con el id del evento miro el id de la institucion educativa
+         * con el id de la institucion educativa, valido al aseguradora
+         */
+        $this->db->trans_start();
+        
+        $this->db->select('i.aseguradora')->from('institucion_educativa i, evento e')
+                    ->where('i.id_institucion = e.institucion_edu_id')
+                    ->where('e.id_evento',$id);
+        $query = $this->db->get('');
+        //retornamos el id de la aseguradora.
+        if($query->num_rows() > 0)
+        {
+            $this->db->trans_complete();
+            return $query;
+        }
+        else
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }        
+        
+        $this->db->trans_complete();
+    }
 
     function user_institucion() // con esta funcion consultamos a que institucion pertenece el usuario logueado.
     {
