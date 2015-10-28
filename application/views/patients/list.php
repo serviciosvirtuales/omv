@@ -1,3 +1,4 @@
+<?php echo "<h2 style='color:#990000;'>".$this->session->flashdata('message')."</h2>";?>  
 <div class="container-fluid">
     
     

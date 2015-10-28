@@ -94,11 +94,23 @@ class Events extends CI_Controller
             if (!$this->ion_auth->is_admin()) // si no es admin no puede eliminar y consulta sus pacientes
             {
                 $crud->unset_delete();
-                $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
+                if(!$this->momv->paciente_evento()){
+                    $this->session->set_flashdata('message', 'No ha registrado ningún paciente');
+                    redirect('/Patients/view', 'refresh');
+                }
+                else{
+                    $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
+                }
             }
             else // es admin consulta todos los pacientes
             {
-                $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento_admin());
+                if(!$this->momv->paciente_evento_admin()){
+                    $this->session->set_flashdata('message', 'No ha registrado ningún paciente');
+                    redirect('/Patients/view', 'refresh');
+                }
+                else{
+                    $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento_admin());
+                }
             }
                 //a continuacion dejo los callbacks para las funciones del crud
                 //########################## Importantes  ##############################
@@ -544,12 +556,11 @@ class Events extends CI_Controller
         $mailAseguradora = $this->momv->valida_Aseguradora_mail($id);
         
         if($mailAseguradora == 1)
-        {
-        
-        $this->email->subject('Respuesta del Servicio de Orientación Médica Virtual XXX');
-        $this->email->message('<body style="margin:0; padding: 0; border:0;">
-	<table class="wrapper" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family: Helvetica, Arial, sans-serif; font-size: 90%; color: #555;">
-		<tr>
+        {        
+            $this->email->subject('Respuesta del Servicio de Orientación Médica Virtual XXX');
+            $this->email->message('<body style="margin:0; padding: 0; border:0;">
+            <table class="wrapper" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family: Helvetica, Arial, sans-serif; font-size: 90%; color: #555;">
+                    <tr>
 			<td align="center">
 				<table class="content" cellpadding="0" cellspacing="0" border="0" width="600">
 					<tr><td width="100%" bgcolor="#042473">
@@ -590,45 +601,45 @@ class Events extends CI_Controller
         else
         {
             $this->email->subject('Respuesta del Servicio de Orientación Médica Virtual');
-        $this->email->message('<body style="margin:0; padding: 0; border:0;">
-	<table class="wrapper" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family: Helvetica, Arial, sans-serif; font-size: 90%; color: #555;">
-		<tr>
-			<td align="center">
-				<table class="content" cellpadding="0" cellspacing="0" border="0" width="600">
-					<tr><td width="100%" bgcolor="#042473">
-						<table cellpadding="20">
-							<tr>
-								<td width="100%" bgcolor="#042473">
-									<img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" width="200" style="display:block;">
-								</td>
-							</tr>
-						</table>
-					</td></tr>
-					<tr>
-						<td>
-							<img src="http://173.192.217.154/omv/includes/img/banner3.jpg" style="display:block;">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<h1>Ya puede acceder a la respuesta del Servicio de Orientación Médica Virtual</h1>
-							<br />
-							<p><strong>Importante</strong> - Ya puede acceder para ver la respuesta a su consulta en el Servicio de Orientación Médica Virtual. Para acceder al sistema y ver la respuesta a este evento, puede dirigirse a <a href="#">https://fsfb.edu.co/omv/</a>. Puede acceder con su usuario y contraseña registrada y seleccionar "Ver consultas pasadas" en el menú principal.</p>
-							<p>Puede saber más del Servicio, ingresando a <a href="#">esta página.</a></p>
-							<p>Si tiene más preguntas, puede comunicarse con Servicios Virtuales al correo electrónico <a href="mailto:servicios.virtuales@fsfb.edu.co">servicios.virtuales@fsfb.edu.co</a> o llamando al teléfono (1) 6030303 extensión 5724.</p>
-							<br />
-							<p><strong>El Equipo de Servicios Virtuales</strong><br />Fundación Santa Fe de Bogotá</p><br />
-						</td>
-					</tr>
-					<tr>
-						<td style="font-size:70%">Todos los derechos reservados, Fundación Santa Fe de Bogotá. 
-							Evite imprimir, piense en su compromiso con el medio ambiente.</td>
-					</tr>
-				</table>
-			</td>
-                    </tr>
-                </table>
-            </body>');
+            $this->email->message('<body style="margin:0; padding: 0; border:0;">
+            <table class="wrapper" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family: Helvetica, Arial, sans-serif; font-size: 90%; color: #555;">
+                    <tr>
+                            <td align="center">
+                                    <table class="content" cellpadding="0" cellspacing="0" border="0" width="600">
+                                            <tr><td width="100%" bgcolor="#042473">
+                                                    <table cellpadding="20">
+                                                            <tr>
+                                                                    <td width="100%" bgcolor="#042473">
+                                                                            <img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" width="200" style="display:block;">
+                                                                    </td>
+                                                            </tr>
+                                                    </table>
+                                            </td></tr>
+                                            <tr>
+                                                    <td>
+                                                            <img src="http://173.192.217.154/omv/includes/img/banner3.jpg" style="display:block;">
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <td>
+                                                            <h1>Ya puede acceder a la respuesta del Servicio de Orientación Médica Virtual</h1>
+                                                            <br />
+                                                            <p><strong>Importante</strong> - Ya puede acceder para ver la respuesta a su consulta en el Servicio de Orientación Médica Virtual. Para acceder al sistema y ver la respuesta a este evento, puede dirigirse a <a href="#">https://fsfb.edu.co/omv/</a>. Puede acceder con su usuario y contraseña registrada y seleccionar "Ver consultas pasadas" en el menú principal.</p>
+                                                            <p>Puede saber más del Servicio, ingresando a <a href="#">esta página.</a></p>
+                                                            <p>Si tiene más preguntas, puede comunicarse con Servicios Virtuales al correo electrónico <a href="mailto:servicios.virtuales@fsfb.edu.co">servicios.virtuales@fsfb.edu.co</a> o llamando al teléfono (1) 6030303 extensión 5724.</p>
+                                                            <br />
+                                                            <p><strong>El Equipo de Servicios Virtuales</strong><br />Fundación Santa Fe de Bogotá</p><br />
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                    <td style="font-size:70%">Todos los derechos reservados, Fundación Santa Fe de Bogotá. 
+                                                            Evite imprimir, piense en su compromiso con el medio ambiente.</td>
+                                            </tr>
+                                    </table>
+                            </td>
+                        </tr>
+                    </table>
+                </body>');
         }
 
         //$this->email->print_debugger();

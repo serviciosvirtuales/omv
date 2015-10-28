@@ -178,7 +178,7 @@ class Personas extends CI_Controller
             if($this->ion_auth_model->register($username, $password, $email, $data, $group))
             {
                 //antes de retornar el id, envio el correo
-                log_message('ERROR', 'AQUI Envio El CORREO');
+                log_message('ERROR', 'AQUI Envio El CORREO al usuario registrado');
                 //###########  CORREO  ##############
                 $this->mail_newUser($password, $email);
                 //###########  CORREO  ##############
@@ -279,7 +279,7 @@ class Personas extends CI_Controller
         if (!$this->email->send())
         {
             //var_dump($this->email->print_debugger());
-            log_message('ERROR', ' No Envió correo con respuesta a --> ' . $email);
+            log_message('ERROR', ' No Envió correo al registrar a --> ' . $email);
         } 
         else
         {
