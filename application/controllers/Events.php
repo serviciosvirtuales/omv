@@ -311,7 +311,7 @@ class Events extends CI_Controller
             $crud->display_as('fecha_evento', 'Registrado el');
             $crud->display_as('paciente_id', 'Paciente');
             $crud->display_as('descripcion', 'Descripción del evento');
-            $crud->display_as('institucion_edu_id', 'Código Institución Educativa');
+            $crud->display_as('institucion_edu_id', 'Código Institución Educativa'); //este campo hay que ajustarlo
             $crud->display_as('adjunto1', 'Archivo Adjunto');
             $crud->display_as('adjunto2', 'Archivo Adjunto');
             $crud->display_as('adjunto3', 'Archivo Adjunto');
