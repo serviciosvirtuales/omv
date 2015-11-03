@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h3>Instituciones Educativas:</h3>
+    <h2>Instituciones Educativas</h2><div align="right"><a href="<?php echo site_url('/menu');?>" class="btn btn-info">Menú Principal</a></div><hr>
     <div class="col-xs-12 col-sm-11 col-md-11">    
         <!-- Código que inserta la tabla de Grocery CRUD -->
         <?php 

@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h3>Eventos</h3>
+    <h2>Responder Consultas</h2><div align="right"><input type="button" class="btn btn-info"value="Volver atrás" name="volver atrás2" onclick="history.back()" /></div><hr>
     
     <div class="col-xs-12 col-sm-11 col-md-11">    
         <!-- Código que inserta la tabla de Grocery CRUD -->

@@ -1,6 +1,6 @@
 <div class="container-fluid"> 
     
-    <h3>Gestion Aseguradoras</h3>
+    <div><h2>Aseguradoras </h2></div><div align="right"><a href="<?php echo site_url('/menu');?>" class="btn btn-info">Menú Principal</a></div><hr>
     <p> Aqui agregamos las aseguradoras para luego asociarlas a una institucion educativa
     <div class="col-xs-12 col-sm-11 col-md-11">    
         <!-- Código que inserta la tabla de Grocery CRUD -->

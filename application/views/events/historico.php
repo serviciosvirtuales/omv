@@ -1,6 +1,5 @@
-<div class="container-fluid">
-      
-    <h3>Histórico:</h3>
+<div class="container-fluid">      
+    <h2>Consultas Pasadas</h2><div align="right"><a href="<?php echo site_url('/menu');?>" class="btn btn-info">Menú Principal</a></div><hr>
     <?php if($this->session->flashdata('message')){echo "<div class='alert alert-danger' role='alert'>".$this->session->flashdata('message')."</div>";}?>  
     <div class="col-xs-12 col-sm-11 col-md-11">    
         <!-- Código que inserta la tabla de Grocery CRUD -->

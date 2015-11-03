@@ -32,7 +32,7 @@
                 <a href="historico">
                     <div class="mini-container">
                         <img src="<?php echo base_url() ?>includes/img/logo_historico.png" style="width: 60px; height: 60px" />
-                        <h5>Ver Consultas Pasadas</h5>
+                        <h5>Consultas Pasadas</h5>
                     </div>
                 </a>
             </div>
@@ -62,7 +62,7 @@
                 <a href="<?php echo site_url('patients') ?>">
                     <div class="mini-container">
                         <img src="<?php echo base_url() ?>includes/img/logo_pacientes.png" style="width: 60px; height: 60px" />
-                        <h5>Ver Pacientes</h5>
+                        <h5>Pacientes</h5>
                     </div>
                 </a>
             </div>
@@ -77,7 +77,7 @@
                 <a href="<?php echo site_url('personas') ?>">
                     <div class="mini-container">
                         <img src="<?php echo base_url() ?>includes/img/logo_usuarios.png" style="width: 60px; height: 60px" />
-                        <h5>Administrar Usuarios</h5>
+                        <h5>Usuarios</h5>
                     </div>
                 </a>
             </div>
@@ -92,7 +92,7 @@
                 <a href="<?php echo site_url('institucion') ?>">
                     <div class="mini-container">
                         <img src="<?php echo base_url() ?>includes/img/logo_colegios.png" style="width: 60px; height: 60px" />
-                        <h5>Administrar Instituciones</h5>
+                        <h5>Instituciones</h5>
                     </div>
                 </a>
             </div>

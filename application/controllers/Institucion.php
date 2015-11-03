@@ -70,7 +70,7 @@ class Institucion extends CI_Controller
             // Campos obligatorios
             $crud->required_fields('id_institucion','nombre_institucion','poliza_institucion', 'aseguradora');
             $crud->add_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por', 'aseguradora'); // con add establecemos los campos para el formulario
-            $crud->edit_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por', 'aseguradora');
+            $crud->edit_fields('id_institucion','nombre_institucion','poliza_institucion','registrado_por', 'aseguradora', 'estado');
             // Validación de campos
             //$crud->set_rules('id_number', 'No. Identificación', 'integer');
 

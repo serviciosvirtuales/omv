@@ -1,6 +1,6 @@
 <div class="container-fluid">
       
-    <h2>Detalle eventos Paciente:</h2>
+    <h2>Detalle eventos Paciente</h2><div align="right"><a href="<?php echo site_url('/historico/lista');?>" class="btn btn-info">Volver Atrás</a></div><hr>
     <div class="col-xs-12 col-sm-11 col-md-11">    
        <?php
        echo '<table class="table table-striped table-bordered">';

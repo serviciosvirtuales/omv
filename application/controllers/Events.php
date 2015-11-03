@@ -125,7 +125,8 @@ class Events extends CI_Controller
             $crud->callback_after_insert(array($this, 'mail_newEvento'));
             //###########  CORREO  ##############
             
-            $crud->unset_back_to_list();
+            //$crud->unset_back_to_list();
+            /*
             $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
                                     <script type="text/javascript">
                                     window.location = "' . site_url(strtolower('home') . '/' . strtolower('index')) . '";
@@ -133,7 +134,8 @@ class Events extends CI_Controller
                                     <div style="display:none">
                                     '
                 );
-
+             * 
+             */
 
             // Pintado de formulario y creación de vista
             $output = $crud->render();
@@ -294,6 +296,7 @@ class Events extends CI_Controller
             $crud = new grocery_CRUD();
             $crud->set_subject('Eventos');
             $crud->where('estado',$estado);
+            $crud->order_by('fecha_evento', 'DESC');
             $crud->set_table('evento');
 
             $crud->set_field_upload('adjunto1','assets/uploads/files/evento');      

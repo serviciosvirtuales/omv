@@ -1,6 +1,6 @@
 <div class="container-fluid">
     
-    <h3>Consulta:</h3>
+    <h2>Consulta</h2>
     <div>
         <?php
         foreach ($evento->result() as $consulta)
