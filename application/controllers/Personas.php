@@ -73,6 +73,7 @@ class Personas extends CI_Controller
             $crud->display_as('rol', 'Perfil');
 
             $crud->field_type('id_institucion_ed', 'dropdown', $this->momv->instituciones());
+            $crud->field_type('password', 'password');
 
             // Campos obligatorios
             $crud->required_fields('first_name', 'last_name', 'email', 'password', 'phone', 'id_institucion_ed','rol');
