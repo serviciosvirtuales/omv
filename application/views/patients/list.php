@@ -1,4 +1,4 @@
-<?php echo "<h2 style='color:#990000;'>".$this->session->flashdata('message')."</h2>";?>  
+<?php if($this->session->flashdata('message')){echo "<div class='alert alert-danger' role='alert'>".$this->session->flashdata('message')."</div>";}?>  
 <div class="container-fluid">
     
     

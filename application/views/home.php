@@ -80,13 +80,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             else 
                             {   
                                 $usr = $this->ion_auth->user()->row();	// capturamos los datos del user			 
-                                echo'Bienvenido '.$usr->first_name; // mostramos el nombre
-                                
+                                echo'Bienvenido '.$usr->first_name; // mostramos el nombre                                
                                 /*
-                                $this->load->view('menu/menu_view');
-                                
-                                 * $this->load->view('layout/footer');
-                                
+                                $this->load->view('menu/menu_view');                                
+                                 * $this->load->view('layout/footer');                                
                                 */
                             }
                             ?>
@@ -95,5 +92,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
             <?php
-echo "<h2>".$this->session->flashdata('message')."</h2>";
+if($this->session->flashdata('message')){echo "<div class='alert alert-danger' role='alert'>".$this->session->flashdata('message')."</div>";}
 ?>

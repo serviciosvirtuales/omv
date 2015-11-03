@@ -187,8 +187,8 @@ class Events extends CI_Controller
                 'protocol' => 'smtp',
                 'smtp_host' => 'ssl://smtp.mailgun.org',
                 'smtp_port' => 465,
-                'smtp_user' => 'postmaster@sandbox224cc937f61d42948cc7e944f56c4694.mailgun.org',
-                'smtp_pass' => '1c0e062dbc4ffaea11496eca3c905ccf',
+                'smtp_user' => 'postmaster@omv.fsfb.edu.co',
+                'smtp_pass' => '9e9c3799417832ce3a46ccde06b5cea4',
                 'mailtype' => 'html',
                 'charset' => 'utf-8',
                 'newline' => "\r\n");
