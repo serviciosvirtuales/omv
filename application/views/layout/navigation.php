@@ -43,6 +43,46 @@
             </div>
     	</div>
     </nav>
+<?php 
+/*
+ * a continuacion viene la parte del user
+*/
+?>
+<div id="userfsfb">
+	<?php
+
+		$usr = $this->ion_auth->user()->row();		
+		//$usr = $this->ion_auth->user();
+		
+		$cod = $usr->id;
+
+		$this->db->select('c.first_name,c.last_name')
+			->from('users c')
+			->where('c.id',$cod);			
+			$rol = $this->db->get();
+
+		foreach($rol->result() as $role)			//local
+		{ 
+			echo "<h5>Bienvenido - ".$role->first_name." ".$role->last_name;
+		}
+
+	?>
+</div>
+<style>
+#userfsfb{
+	color: #003399;
+	text-align: right;
+	vertical-align: middle;
+        margin: -15px 3px 3px 3px;
+        padding: 5px 15px 5px 5px;        
+        background-color: rgba(220,220,220,0.2);
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        font-size: small;
+
+}
+</style>
 <div class="row">
         <?php echo "<div class='jumbotron' style='background-image:url(" . base_url() . "includes/img/banner1.png); no-repeat fixed; background-size:cover; background-position: right 0px top -120px; min-height: 180px;' ></div>"; ?>
     </div>

@@ -23,8 +23,8 @@ class Menu extends CI_Controller {
         if($this->ion_auth->logged_in()) //valido que haya iniciado sesion
         {
             $data['page'] = 'Inicio';
-            $this->load->view('layout/header', $data);
-            $this->load->view('layout/navigation', $data);
+            $this->load->view('layout/header', $data);            
+            $this->load->view('layout/navigation', $data);            
             $this->load->view('menu/menu_view', $data);
             $this->load->view('layout/footer', $data);
         }else

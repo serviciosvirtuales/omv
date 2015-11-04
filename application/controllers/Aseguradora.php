@@ -66,7 +66,9 @@ class Aseguradora extends CI_Controller
                 $crud->unset_add();
                 $crud->unset_edit();
                 $crud->unset_print();
+                $crud->unset_read();
             }
+            $crud->unset_read();
 
             //a continuacion dejo los callbacks para las funciones del crud
             //########################## Importantes  ##############################
@@ -81,15 +83,18 @@ class Aseguradora extends CI_Controller
             //###########  CORREO  ##############
 
             //$crud->unset_back_to_list();
-
+            
+            //quitamos el mensaje y dejamos el boton de volver a la lista
+            /*
             $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
                                         <script type="text/javascript">
-                                        window.location = "' . site_url(strtolower('home') . '/' . strtolower('index')) . '";
+                                        window.location = "' . site_url(strtolower('Aseguradora') . '/' . strtolower('index')) . '";
                                         </script>
                                         <div style="display:none">
                                         '
                     );
-
+             * 
+             */
 
                 // Pintado de formulario y creación de vista
                 $output = $crud->render();
