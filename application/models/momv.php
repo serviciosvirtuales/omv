@@ -226,7 +226,7 @@ class Momv extends CI_Model
         $this->db->trans_start();
 
         //log_message('ERROR', 'mdchat total_pendientes() Aqui estoy 0');
-        $query = $this->db->select('cie10_descripcion')->from('cie10')->order_by("cie10_descripcion", "asc")->get();
+        $query = $this->db->select('cie10_codigo, cie10_nombre')->from('cie10')->order_by("cie10_nombre", "asc")->get();
 
         //$str = $this->db->last_query();
         //log_message('ERROR', 'error CIE10 ' . $str);		
@@ -238,7 +238,7 @@ class Momv extends CI_Model
             {
 
                 //$data[$key->cie10_cie2]=word_limiter($key->cie10_descripcion,5);
-                $data[$key->cie10_descripcion] = $key->cie10_descripcion;
+                $data[$key->cie10_codigo.' | '.$key->cie10_nombre] = $key->cie10_nombre;
             }
             $this->db->trans_complete();
             return $data;

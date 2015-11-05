@@ -41,12 +41,15 @@
                             {
                                 echo '<li><a href="'.site_url("patients").'">Pacientes</a></li>';
                             }
+                            /*
                             $group4 = 1;
                             if ($this->ion_auth->in_group($group4))
                             {  
                                 echo '<li><a href="'.site_url("personas").'">Usuarios</a></li>';
                                 echo '<li><a href="'.site_url("institucion").'">Instituciones</a></li>';
                             }
+                             * 
+                             */
                           ?>
                         </ul>
                     </li>                    
@@ -62,6 +65,8 @@
                             if ($this->ion_auth->is_admin())
                             {
                                 echo'<li><a href="'. site_url('Aseguradora').'">Aseguradoras</a></li>';
+                                echo '<li><a href="'.site_url("personas").'">Usuarios</a></li>';
+                                echo '<li><a href="'.site_url("institucion").'">Instituciones</a></li>';
                                 echo'<li><a href="'. site_url('ConfigEmail').'">Configurar Correos</a></li>';                                
                             }
                           ?>

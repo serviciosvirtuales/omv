@@ -91,7 +91,12 @@ class Patients extends CI_Controller
             $crud->required_fields('type_id', 'id_number', 'first_name', 'last_name', 'birth_date', 'gender', 'contact_phone', 'institution');
 
             // Validación de campos
-            //$crud->set_rules('id_number', 'No. Identificación', 'integer');
+            $crud->set_rules('id_number', 'No. de Identificación', 'alpha_numeric');
+            $crud->set_rules('first_name', 'Primer Nombre', 'alpha_numeric_spaces');
+            $crud->set_rules('middle_name', 'Segundo Nombre', 'alpha_numeric_spaces');
+            $crud->set_rules('last_name', 'Primer Apellido', 'alpha_numeric_spaces');
+            $crud->set_rules('second_last_name', 'Segundo Apellido', 'alpha_numeric_spaces');
+            $crud->set_rules('contact_phone', 'Telefono de Contacto', 'numeric|min_length[6]');
 
             //debemos validar que solo el admin pueda eliminar datos
             if (!$this->ion_auth->is_admin()) // si no es admin condisiono por usuario institucion educativa
