@@ -28,6 +28,32 @@ class Momv extends CI_Model
         }
         $this->db->trans_complete();
     }
+    //instituciones 2 se usa para mostrar la descripcion donde sale el codigo
+    public function instituciones2()
+    {
+        $this->db->trans_start();
+
+        $query = $this->db->select('poliza_institucion, nombre_institucion')->from('institucion_educativa')->order_by("nombre_institucion", "asc")->get();
+
+        //$str = $this->db->last_query();
+        //log_message('ERROR', 'error CIE10 ' . $str);		
+
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $key)
+            {
+                $data[$key->poliza_institucion] = $key->nombre_institucion;
+            }
+            $this->db->trans_complete();
+            return $data;
+        } 
+        else
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+        $this->db->trans_complete();
+    }
     
     public function aseguradoras()
     {

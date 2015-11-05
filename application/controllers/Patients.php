@@ -63,6 +63,7 @@ class Patients extends CI_Controller
 
             $crud->set_subject('Pacientes');
             $crud->set_table('patients');
+            $crud->order_by('last_name', 'ASC');
             $crud->columns('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'contact_phone', 'institution');
 
             //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
@@ -97,6 +98,8 @@ class Patients extends CI_Controller
             {
                 $crud->unset_delete();
             }
+            $crud->unset_read();
+            $crud->unset_print();
             // Dropdowns (Quemados)
             $crud->field_type('type_id', 'dropdown', array(
                 'TI' => 'Tarjeta de Identidad',
@@ -110,6 +113,7 @@ class Patients extends CI_Controller
                 'Masculino' => 'Masculino',
                 'Otro' => 'Otro'
             ));
+            /*
             $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
                                     <script type="text/javascript">
                                     window.location = "' . site_url(strtolower('home') . '/' . strtolower('index')) . '";
@@ -117,6 +121,8 @@ class Patients extends CI_Controller
                                     <div style="display:none">
                                     '
                 );
+             * 
+             */
             // Pintado de formulario y creación de vista
             $output = $crud->render();
 

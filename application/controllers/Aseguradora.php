@@ -69,6 +69,7 @@ class Aseguradora extends CI_Controller
                 $crud->unset_read();
             }
             $crud->unset_read();
+            $crud->unset_print();
 
             //a continuacion dejo los callbacks para las funciones del crud
             //########################## Importantes  ##############################

@@ -53,7 +53,7 @@ class Institucion extends CI_Controller
             $crud->display_as('nombre_institucion', 'Nombre Institución');
             $crud->display_as('poliza_institucion', 'Número de Poliza');
             $crud->display_as('aseguradora', 'Aseguradora');
-            //$crud->display_as('estado', 'Segundo Nombre');
+            $crud->display_as('estado', 'Estado');
             $user = $this->ion_auth->user()->row();
             $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
 
@@ -66,6 +66,7 @@ class Institucion extends CI_Controller
             {
                 $crud->field_type('aseguradora', 'dropdown', $this->momv->aseguradoras());
             }
+            $crud->field_type('estado', 'dropdown', array('Activa'=>'Activa','Inactiva'=>'Inactiva'));
 
             // Campos obligatorios
             $crud->required_fields('id_institucion','nombre_institucion','poliza_institucion', 'aseguradora');
@@ -78,9 +79,11 @@ class Institucion extends CI_Controller
             {
                 $crud->unset_delete();
             }
-
+            $crud->unset_read();
+            $crud->unset_print();
             // Pintado de formulario y creación de vista
             $output = $crud->render();
+            
 
             $this->load->view('layout/header', $data);
             $this->load->view('layout/navigation', $data);

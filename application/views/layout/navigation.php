@@ -20,26 +20,60 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Consultas <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                          <li><a href="<?php echo site_url('Events/view/add');?>">Crear Evento</a></li>
-                          <li><a href="<?php echo site_url('Historico/lista');?>">Ver Consultas Pasadas</a></li>
+                        <?php
+                            $group = array(1,3);
+                            if ($this->ion_auth->in_group($group))
+                            {
+                                echo '<li><a href="'.site_url("Events/view/add").'">Crear Evento</a></li>';
+                            }
+                            
+                            $group2 = array(1,2,3);
+                            if ($this->ion_auth->in_group($group2))
+                            {
+                                echo '<li><a href="'.site_url("Historico/lista").'">Consultas Pasadas</a></li>';
+                            }
+                            $group3 = array(1,2);
+                            if ($this->ion_auth->in_group($group3))
+                            {
+                                echo '<li><a href="'.site_url("events/listado").'">Responder Consultas</a></li>';
+                            }
+                            if ($this->ion_auth->in_group($group))
+                            {
+                                echo '<li><a href="'.site_url("patients").'">Pacientes</a></li>';
+                            }
+                            $group4 = 1;
+                            if ($this->ion_auth->in_group($group4))
+                            {  
+                                echo '<li><a href="'.site_url("personas").'">Usuarios</a></li>';
+                                echo '<li><a href="'.site_url("institucion").'">Instituciones</a></li>';
+                            }
+                          ?>
+                        </ul>
+                    </li>                    
+                    <?php
+                    /*
+                     * A continuacion el dropdown para administrar
+                     */
+                    ?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrar <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                        <?php
+                            if ($this->ion_auth->is_admin())
+                            {
+                                echo'<li><a href="'. site_url('Aseguradora').'">Aseguradoras</a></li>';
+                                echo'<li><a href="'. site_url('ConfigEmail').'">Configurar Correos</a></li>';                                
+                            }
+                          ?>
                         </ul>
                     </li>
                     <li>
                         <a href="#">Recursos</a>
-                    </li>               
+                    </li>                    
                 </ul>
-                        <?php if ($this->ion_auth->logged_in()) {
-                            
-                            echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('home/logout').'">Salir</a></li></ul>';
-                            if ($this->ion_auth->is_admin())
-                            {
-                                echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('ConfigEmail').'">Configurar Correos</a></li></ul>';
-                                echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('Aseguradora').'">Aseguradoras</a></li></ul>';
-                                
-                                
-                            }
-                                                        
-                        } ?>
+                <?php
+                echo'<ul class="nav navbar-nav navbar-right"><li><a href="'. site_url('home/logout').'">Salir</a></li></ul>';
+                ?>
             </div>
     	</div>
     </nav>
@@ -74,8 +108,7 @@
 	text-align: right;
 	vertical-align: middle;
         margin: -15px 3px 3px 3px;
-        padding: 5px 15px 5px 5px;        
-        background-color: rgba(220,220,220,0.2);
+        padding: 5px 15px 5px 5px; 
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;

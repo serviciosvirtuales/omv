@@ -49,6 +49,7 @@ class Events extends CI_Controller
             $this->config->set_item('grocery_crud_file_upload_allow_file_types', 'gif|jpeg|jpg|png|doc|docx|pdf');
             $crud->set_subject('Eventos');
             $crud->where('estado',$estado);
+            $crud->order_by('fecha_evento','DESC');
             $crud->set_table('evento');
 
             $crud->set_field_upload('adjunto1','assets/uploads/files/evento');      
@@ -66,7 +67,7 @@ class Events extends CI_Controller
             $crud->display_as('fecha_evento', 'Registrado el');
             $crud->display_as('paciente_id', 'Paciente');
             $crud->display_as('descripcion', 'Descripción del evento');
-            $crud->display_as('institucion_edu_id', 'Código Institución Educativa');
+            $crud->display_as('institucion_edu_id', 'Institución Educativa');
             $crud->display_as('adjunto1', 'Archivo Adjunto');
             $crud->display_as('adjunto2', 'Archivo Adjunto');
             $crud->display_as('adjunto3', 'Archivo Adjunto');
@@ -82,8 +83,11 @@ class Events extends CI_Controller
             $id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
 
             $crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
-
+            
+            //$crud->field_type('institucion_edu_id', 'dropdown', $this->momv->instituciones2());
+            
             $crud->field_type('registrado_por', 'hidden', $admin);
+            
 
             // Campos obligatorios
             $crud->required_fields('descripcion', 'paciente_id');
@@ -94,11 +98,14 @@ class Events extends CI_Controller
             if (!$this->ion_auth->is_admin()) // si no es admin no puede eliminar y consulta sus pacientes
             {
                 $crud->unset_delete();
+                $crud->unset_read();
+                $crud->unset_print();
                 if(!$this->momv->paciente_evento()){
                     $this->session->set_flashdata('message', 'No ha registrado ningún paciente');
                     redirect('/Patients/view', 'refresh');
                 }
                 else{
+                    
                     $crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
                 }
             }
@@ -137,6 +144,9 @@ class Events extends CI_Controller
              * 
              */
 
+            $crud->unset_read();
+            $crud->unset_print();
+            
             // Pintado de formulario y creación de vista
             $output = $crud->render();
 
@@ -357,7 +367,7 @@ class Events extends CI_Controller
             $crud->unset_delete();
             $crud->unset_add();
             $crud->unset_print();
-            //$crud->unset_read();
+            $crud->unset_read();
 
             $output = $crud->render();
 

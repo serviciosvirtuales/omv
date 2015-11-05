@@ -29,7 +29,7 @@
             {                
                ?> 
             <div class="col-xs-12 col-sm-6 col-md-6">
-                <a href="historico">
+                <a href="<?php echo site_url('historico');?>">
                     <div class="mini-container">
                         <img src="<?php echo base_url() ?>includes/img/logo_historico.png" style="width: 60px; height: 60px" />
                         <h5>Consultas Pasadas</h5>
@@ -44,7 +44,7 @@
             {                
                ?> 
             <div class="col-xs-12 col-sm-6 col-md-6">
-                <a href="events/listado">
+                <a href="<?php echo site_url('events/listado');?>">
                     <div class="mini-container">
                         <img src="<?php echo base_url() ?>includes/img/logo_responder.png" style="width: 60px; height: 60px" />
                         <h5>Responder Consultas</h5>
@@ -96,6 +96,20 @@
                     </div>
                 </a>
             </div>
+            <?php
+            }
+            if($this->ion_auth->is_admin())
+            {
+                ?>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <a href="<?php echo site_url('Aseguradora');?>">
+                        <div class="mini-container">
+                            <img src="<?php echo base_url() ?>includes/img/logo_evento.png" style="width: 60px; height: 60px" />
+                            <h5>Aseguradoras</h5>
+                        
+                        </div>
+                    </a>
+                </div>
             <?php
             }
             ?>
