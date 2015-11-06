@@ -36,8 +36,25 @@
                           </div>
                           <div class="modal-body">        
 
-                           <label>Paciente: </label><p>'.$value->first_name.' '.$value->middle_name.' '.$value->last_name.'</p>
-                            <label>Pregunta: </label>
+                           <strong>Paciente: </strong>'.$value->first_name.' '.$value->middle_name.' '.$value->last_name.'</br>';
+                               
+                        echo '<strong>Fecha Nacimiento: </strong>'.$value->birth_date.'</br>';
+                        /*
+                         * calculo edad Inicio
+                         */
+                        $date2 = date('Y-m-d');//
+                        $diff = abs(strtotime($date2) - strtotime($value->birth_date));
+                        $years = floor($diff / (365*60*60*24));
+                        //$months = floor(($diff - $years * (365*60*60*24)) / (30*60*60*24));
+                        //$days = floor(($diff - $years * (365*60*60*24) - $months*(30*60*60*24))/ (60*60*24));
+                        /*
+                         * calculo edad FIn
+                         */
+                        echo '<strong>Edad: </strong>'.$years.' Años</br>';
+                        //echo '<strong>Edad: </strong>'.$years.' Años, '.$months.' Meses, '.$days.' Días</br>';
+                        echo '<strong>Género:</strong> '.$value->gender.'</br></br>';
+            
+                        echo '    <label>Pregunta: </label>
                             <p>'.$value->descripcion.'</p>';
                                 
                             if($value->eadj1 || $value->eadj2 || $value->eadj3 || $value->eadj4 || $value->eadj5)
