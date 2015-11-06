@@ -6,7 +6,22 @@
         foreach ($evento->result() as $consulta)
         {
             echo '<strong>Paciente: </strong>'.$consulta->first_name.' '.$consulta->middle_name.' '.$consulta->last_name.'</br>';
-            echo '<br><strong>Consulta:</strong> '.$consulta->descripcion.'<br>';
+            echo '<strong>Fecha Nacimiento: </strong>'.$consulta->birth_date.'</br>';
+            /*
+             * calculo edad Inicio
+             */
+            $date2 = date('Y-m-d');//
+            $diff = abs(strtotime($date2) - strtotime($consulta->birth_date));
+            $years = floor($diff / (365*60*60*24));
+            //$months = floor(($diff - $years * (365*60*60*24)) / (30*60*60*24));
+            //$days = floor(($diff - $years * (365*60*60*24) - $months*(30*60*60*24))/ (60*60*24));
+            /*
+             * calculo edad FIn
+             */
+            echo '<strong>Edad: </strong>'.$years.' Años</br>';
+            //echo '<strong>Edad: </strong>'.$years.' Años, '.$months.' Meses, '.$days.' Días</br>';
+            echo '<strong>Género:</strong> '.$consulta->gender.'</br>';
+            echo '<strong>Consulta:</strong> '.$consulta->descripcion.'</br>';
             
             if($consulta->adjunto1){
             echo '<a href="'.site_url('assets/uploads/files/evento').'/'.$consulta->adjunto1.'" target ="_blank">adjunto 1</a> ';
