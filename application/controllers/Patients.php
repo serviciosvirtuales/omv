@@ -65,7 +65,7 @@ class Patients extends CI_Controller
             $crud->set_table('patients');
             $crud->order_by('last_name', 'ASC');
             
-            //$crud->set_relation('institution', 'institucion_educativa', 'nombre_institucion'); //aqui relaciono la poliza para mostrar el nombre
+            //no se usan relaciones con campos ocultos
             
             $crud->columns('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'contact_phone', 'institution');
 
