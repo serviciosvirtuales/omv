@@ -20,7 +20,7 @@
              */
             echo '<strong>Edad: </strong>'.$years.' Años</br>';
             //echo '<strong>Edad: </strong>'.$years.' Años, '.$months.' Meses, '.$days.' Días</br>';
-            echo '<strong>Género:</strong> '.$consulta->gender.'</br>';
+            echo '<strong>Género:</strong> '.$consulta->gender.'</br></br>';
             echo '<strong>Consulta:</strong> '.$consulta->descripcion.'</br>';
             
             if($consulta->adjunto1){
@@ -41,6 +41,5 @@
         }
         ?>
         
-    </div>
-    <br />
+    </div>    
 </div>
