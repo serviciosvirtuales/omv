@@ -16,7 +16,7 @@ class Momv extends CI_Model
         {
             foreach ($query->result() as $key)
             {
-                $data[$key->id_institucion] = $key->nombre_institucion;
+                $data[$key->nombre_institucion] = $key->nombre_institucion;
             }
             $this->db->trans_complete();
             return $data;

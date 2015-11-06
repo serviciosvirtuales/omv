@@ -99,6 +99,7 @@ class Personas extends CI_Controller
                 $crud->callback_update(array($this, 'edit_user_callback'));
                 $crud->callback_delete(array($this, 'delete_user'));
                 ######################################################################
+                
             $crud->unset_read();
             $crud->unset_print();
             // Pintado de formulario y creación de vista

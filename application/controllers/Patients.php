@@ -65,13 +65,13 @@ class Patients extends CI_Controller
             $crud->set_table('patients');
             $crud->order_by('last_name', 'ASC');
             
-            $crud->set_relation('institution', 'institucion_educativa', 'nombre_institucion'); //aqui relaciono la poliza para mostrar el nombre
+            //$crud->set_relation('institution', 'institucion_educativa', 'nombre_institucion'); //aqui relaciono la poliza para mostrar el nombre
             
             $crud->columns('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'contact_phone', 'institution');
 
             //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
-            $crud->add_action('Crear Evento', site_url('/includes/img/responder.png'), '/Events/view/add');
-
+            $crud->add_action('Crear Evento', site_url('/includes/img/responder.png'), '/Events/view/add');            
+            
             // Labels de columnas
             $crud->display_as('type_id', 'Tipo de Identificación');
             $crud->display_as('id_number', 'No. Identificación');
@@ -83,19 +83,24 @@ class Patients extends CI_Controller
             $crud->display_as('gender', 'Género');
             $crud->display_as('contact_phone', 'Teléfono de Contacto');
             $crud->display_as('institution', 'Institución');
-
-            //$crud->field_type('institution', 'dropdown', $this->momv->instituciones());
-            $user = $this->ion_auth->user()->row();
-            $cod_institucion = $user->id_institucion_ed;
-
-            $crud->field_type('institution', 'hidden', $cod_institucion); // enviamos la institucion del usuario logueado
-
-            // Campos obligatorios
-            $crud->required_fields('type_id', 'id_number', 'first_name', 'last_name', 'birth_date', 'gender', 'contact_phone');
             
-            $crud->add_fields('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'birth_date', 'gender', 'contact_phone');
-            $crud->edit_fields('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'birth_date', 'gender', 'contact_phone');
-
+            $user = $this->ion_auth->user()->row();
+            $cod_institucion = $user->id_institucion_ed;    
+            //log_message('ERROR', 'el codigo de la institucion es '.$cod_institucion);
+            $crud->field_type('institution', 'hidden', $cod_institucion); // enviamos la institucion del usuario logueado
+           
+            // Campos obligatorios
+            $crud->required_fields('type_id', 'id_number', 'first_name', 'last_name', 'birth_date', 'gender', 'contact_phone', 'institution');
+            
+            /*estos son los campos que muestro en el formulario*/
+            //$crud->fields('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'birth_date', 'gender', 'contact_phone');
+            
+            //$crud->add_fields('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'birth_date', 'gender', 'contact_phone');
+            //$crud->edit_fields('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'birth_date', 'gender', 'contact_phone');
+            
+            
+            
+            
             // Validación de campos
             $crud->set_rules('id_number', 'No. de Identificación', 'alpha_numeric');
             $crud->set_rules('first_name', 'Primer Nombre', 'alpha_numeric_spaces');

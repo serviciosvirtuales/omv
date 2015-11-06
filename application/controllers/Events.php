@@ -47,10 +47,13 @@ class Events extends CI_Controller
             // Inicialización CRUD
             $crud = new grocery_CRUD();
             $this->config->set_item('grocery_crud_file_upload_allow_file_types', 'gif|jpeg|jpg|png|doc|docx|pdf');
-            $crud->set_subject('Eventos');
-            $crud->where('estado',$estado);
-            $crud->order_by('fecha_evento','DESC');
+            $crud->set_subject('Eventos');            
             $crud->set_table('evento');
+            $crud->where('evento.estado',$estado);
+            $crud->order_by('fecha_evento','DESC');
+            
+            //$crud->set_relation('institucion_edu_id', 'institucion_educativa', 'nombre_institucion');
+            //$crud->set_relation('registrado_por', 'users', '{last_name} {first_name}');
 
             $crud->set_field_upload('adjunto1','assets/uploads/files/evento');      
             $crud->set_field_upload('adjunto2','assets/uploads/files/evento');      
@@ -76,7 +79,7 @@ class Events extends CI_Controller
 
             //$crud->display_as('estado', 'Segundo Nombre');
             $user = $this->ion_auth->user()->row();
-            $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
+            $admin = $user->first_name.' '.$user->last_name; // aqui envio el id de la persona logueada q registra a la entidad. 
 
             //$crud->field_type('paciente_id', 'dropdown', $this->momv->paciente_evento());
 
@@ -132,8 +135,8 @@ class Events extends CI_Controller
             $crud->callback_after_insert(array($this, 'mail_newEvento'));
             //###########  CORREO  ##############
             
-            //$crud->unset_back_to_list();
-            /*
+            $crud->unset_back_to_list();
+            
             $crud->set_lang_string('insert_success_message', 'Gracias por usar nuestros servicios' . '<br/>
                                     <script type="text/javascript">
                                     window.location = "' . site_url(strtolower('home') . '/' . strtolower('index')) . '";
@@ -141,9 +144,7 @@ class Events extends CI_Controller
                                     <div style="display:none">
                                     '
                 );
-             * 
-             */
-
+            
             $crud->unset_read();
             $crud->unset_print();
             
@@ -304,10 +305,13 @@ class Events extends CI_Controller
             $estado = 'Recibido';
             // Inicialización CRUD
             $crud = new grocery_CRUD();
-            $crud->set_subject('Eventos');
-            $crud->where('estado',$estado);
-            $crud->order_by('fecha_evento', 'DESC');
+            $crud->set_subject('Eventos');   
             $crud->set_table('evento');
+            $crud->where('evento.estado',$estado);
+            $crud->order_by('fecha_evento', 'DESC');
+            
+            //$crud->set_relation('institucion_edu_id', 'institucion_educativa', 'nombre_institucion');
+            //$crud->set_relation('registrado_por', 'users', '{last_name} {first_name}');
 
             $crud->set_field_upload('adjunto1','assets/uploads/files/evento');      
             $crud->set_field_upload('adjunto2','assets/uploads/files/evento');      
@@ -324,7 +328,7 @@ class Events extends CI_Controller
             $crud->display_as('fecha_evento', 'Registrado el');
             $crud->display_as('paciente_id', 'Paciente');
             $crud->display_as('descripcion', 'Descripción del evento');
-            $crud->display_as('institucion_edu_id', 'Código Institución Educativa'); //este campo hay que ajustarlo
+            $crud->display_as('institucion_edu_id', 'Institución Educativa'); //este campo hay que ajustarlo
             $crud->display_as('adjunto1', 'Archivo Adjunto');
             $crud->display_as('adjunto2', 'Archivo Adjunto');
             $crud->display_as('adjunto3', 'Archivo Adjunto');

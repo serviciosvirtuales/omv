@@ -36,15 +36,18 @@ class Historico extends CI_Controller
 
             // Inicialización CRUD
             $crud = new grocery_CRUD();
-            $user = $this->momv->user_institucion();        
+            $user = $this->momv->user_institucion();  
+            
+            $crud->set_subject('Historico Pacientes');
+            $crud->set_table('patients');
 
             if (!$this->ion_auth->is_admin()) // si no es admin condisiono por usuario institucion educativa
             {
                 $crud->where('institution',$user);
             }
-
-            $crud->set_subject('Historico Pacientes');
-            $crud->set_table('patients');
+            
+            //$crud->set_relation('institution', 'institucion_educativa', 'nombre_institucion');
+            
             $crud->columns('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'contact_phone', 'institution');
 
             $crud->display_as('type_id', 'Tipo de Identificación');
