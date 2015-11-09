@@ -85,7 +85,7 @@ class Personas extends CI_Controller
             $crud->edit_fields('first_name', 'last_name', 'email', 'phone', 'id_institucion_ed');
 
             // Validación de campos
-            $crud->set_rules('phone', 'Número de Telefono', 'numeric|min_length[6]');
+            $crud->set_rules('phone', 'Número de Telefono', 'min_length[6]');
             $crud->set_rules('email', 'Correo Electrónico', 'valid_email');
 
             //debemos validar que solo el admin pueda eliminar datos

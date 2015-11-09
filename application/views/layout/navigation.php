@@ -14,17 +14,34 @@
             </div>
             <div id="navbar-collapsed1" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li  class="active">
+                    <?php
+                    if($page=='Inicio'){
+                    echo '<li  class="active">';
+                    }
+                    else
+                    {
+                         echo '<li>';
+                    }
+                    ?>
                         <a href="<?php echo site_url('/');?>">Inicio</a>
                     </li>
-                    <li class="dropdown">
+                    <?php
+                    if($page=='Eventos'||$page=='Historico de eventos'||$page=='Pacientes'){ //Daniel se quejo por 2 semanas
+                    echo '<li class="dropdown active">';
+                    }
+                    else {
+                        echo '<li class="dropdown">';
+                    }
+                    ?>                        
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Consultas <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                         <?php
                             $group = array(1,3);
                             if ($this->ion_auth->in_group($group))
                             {
+                                
                                 echo '<li><a href="'.site_url("Events/view/add").'">Crear Evento</a></li>';
+                                
                             }
                             
                             $group2 = array(1,2,3);
@@ -35,7 +52,7 @@
                             $group3 = array(1,2);
                             if ($this->ion_auth->in_group($group3))
                             {
-                                echo '<li><a href="'.site_url("events/listado").'">Responder Consultas</a></li>';
+                                echo '<li><a href="'.site_url("Events/listado").'">Responder Consultas</a></li>';
                             }
                             if ($this->ion_auth->in_group($group))
                             {
@@ -57,8 +74,12 @@
                     /*
                      * A continuacion el dropdown para administrar
                      */
-                    ?>
-                    <li class="dropdown">
+                    if($page=='Aseguradoras'||$page=='Personas'||$page=='Institucion Educativa'||$page=='Correos Especialistas'){ //Daniel se quejo por 2 semanas Correos Especialistas
+                    echo '<li class="dropdown active">';
+                    }else{
+                        echo '<li class="dropdown">';
+                    }
+                            ?>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrar <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                         <?php
