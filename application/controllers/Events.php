@@ -64,7 +64,7 @@ class Events extends CI_Controller
             $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'estado','adjunto1');
 
             //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
-            $crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
+            //$crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
 
             // Labels de columnas
             $crud->display_as('fecha_evento', 'Registrado el');
@@ -101,8 +101,10 @@ class Events extends CI_Controller
             if (!$this->ion_auth->is_admin()) // si no es admin no puede eliminar y consulta sus pacientes
             {
                 $crud->unset_delete();
+                $crud->unset_export();
                 $crud->unset_read();
                 $crud->unset_print();
+                $crud->unset_edit();
                 if(!$this->momv->paciente_evento()){
                     $this->session->set_flashdata('message', 'No ha registrado ningún paciente');
                     redirect('/Patients/view', 'refresh');
