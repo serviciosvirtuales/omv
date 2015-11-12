@@ -7,7 +7,7 @@ class Momv extends CI_Model
     {
         $this->db->trans_start();
 
-        $query = $this->db->select('id_institucion, nombre_institucion')->from('institucion_educativa')->order_by("nombre_institucion", "asc")->get();
+        $query = $this->db->select('id, id_institucion, nombre_institucion')->from('institucion_educativa')->order_by("nombre_institucion", "asc")->get();
 
         //$str = $this->db->last_query();
         //log_message('ERROR', 'error CIE10 ' . $str);		
@@ -16,7 +16,7 @@ class Momv extends CI_Model
         {
             foreach ($query->result() as $key)
             {
-                $data[$key->nombre_institucion] = $key->nombre_institucion;
+                $data[$key->id] = $key->nombre_institucion;
             }
             $this->db->trans_complete();
             return $data;
@@ -115,7 +115,11 @@ class Momv extends CI_Model
         $user = $this->ion_auth->user()->row();
         $id_usuario = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
 
-        $query = $this->db->select('id_institucion_ed')->where('id', $id_usuario)->get('users');
+        //$query = $this->db->select('id_institucion_ed')->where('id', $id_usuario)->get('users');
+        $query = $this->db->select('i.nombre_institucion, u.*')->from('institucion_educativa i, users u')
+                ->where('u.id', $id_usuario)
+                ->where('u.id_institucion_ed = i.id')
+                ->get('');
 
         //$str = $this->db->last_query();
         //log_message('ERROR', 'error CIE10 ' . $str);		
@@ -124,7 +128,37 @@ class Momv extends CI_Model
         {
             $row = $query->row();
             $this->db->trans_complete();
-            return $row->id_institucion_ed;
+            return $row->nombre_institucion;
+        } 
+        else
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+        $this->db->trans_complete();
+    }
+    
+    function user_institucion2() // con esta funcion retornamos el codigo de la institucion
+    {
+        $this->db->trans_start();
+
+        $user = $this->ion_auth->user()->row();
+        $id_usuario = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
+
+        //$query = $this->db->select('id_institucion_ed')->where('id', $id_usuario)->get('users');
+        $query = $this->db->select('i.id as codigo, u.*')->from('institucion_educativa i, users u')
+                ->where('u.id', $id_usuario)
+                ->where('u.id_institucion_ed = i.id')
+                ->get('');
+
+        //$str = $this->db->last_query();
+        //log_message('ERROR', 'error CIE10 ' . $str);		
+
+        if ($query->num_rows() > 0)
+        {
+            $row = $query->row();
+            $this->db->trans_complete();
+            return $row->codigo;
         } 
         else
         {

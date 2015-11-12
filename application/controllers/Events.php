@@ -61,7 +61,7 @@ class Events extends CI_Controller
             $crud->set_field_upload('adjunto4','assets/uploads/files/evento');      
             $crud->set_field_upload('adjunto5','assets/uploads/files/evento');
 
-            $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'institucion_edu_id', 'estado','adjunto1');
+            $crud->columns('paciente_id', 'descripcion', 'fecha_evento', 'registrado_por', 'estado','adjunto1');
 
             //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
             $crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
@@ -310,7 +310,7 @@ class Events extends CI_Controller
             $crud->where('evento.estado',$estado);
             $crud->order_by('fecha_evento', 'DESC');
             
-            //$crud->set_relation('institucion_edu_id', 'institucion_educativa', 'nombre_institucion');
+            $crud->set_relation('institucion_edu_id', 'institucion_educativa', 'nombre_institucion');
             //$crud->set_relation('registrado_por', 'users', '{last_name} {first_name}');
 
             $crud->set_field_upload('adjunto1','assets/uploads/files/evento');      

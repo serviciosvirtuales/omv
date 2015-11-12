@@ -144,7 +144,7 @@ class Personas extends CI_Controller
             $username = $post_array['username'];
             $email = $post_array['email'];
             $data = array(
-                'username' => $username,
+                'username' => $email,
                 'email' => $email,
                 'password' => $post_array['password'],                
                 'first_name' => $post_array['first_name'],

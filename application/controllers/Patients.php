@@ -52,13 +52,16 @@ class Patients extends CI_Controller
 
             // Inicialización CRUD
             $crud = new grocery_CRUD();
-
+            
+            $user = $this->ion_auth->user()->row();
+            
             //a continuacion validamos la institucion con el paciente
-            $user = $this->momv->user_institucion();        
+            $user2 = $this->momv->user_institucion();  
+            $user3 = $this->momv->user_institucion2(); 
 
             if (!$this->ion_auth->is_admin()) // si no es admin condisiono por usuario institucion educativa
             {
-                $crud->where('institution',$user);
+                $crud->where('institucion_registra',$user3);
             }
 
             $crud->set_subject('Pacientes');
@@ -82,13 +85,13 @@ class Patients extends CI_Controller
             $crud->display_as('birth_date', 'Fecha de Nacimiento');
             $crud->display_as('gender', 'Género');
             $crud->display_as('contact_phone', 'Teléfono de Contacto');
-            $crud->display_as('institution', 'Institución');
+            $crud->display_as('institution', 'Institución Educativa');
             
             $user = $this->ion_auth->user()->row();
-            $cod_institucion = $user->id_institucion_ed;    
+            $cod_institucion = $user->id_institucion_ed;    // registramos el codigo de la institucion que asociamos al registrar el usuario
             //log_message('ERROR', 'el codigo de la institucion es '.$cod_institucion);
-            $crud->field_type('institution', 'hidden', $cod_institucion); // enviamos la institucion del usuario logueado
-           
+            $crud->field_type('institution', 'hidden', $user2); // enviamos la institucion del usuario logueado
+            $crud->field_type('institucion_registra', 'hidden', $cod_institucion); // enviamos la institucion del usuario logueado
             // Campos obligatorios
             $crud->required_fields('type_id', 'id_number', 'first_name', 'last_name', 'birth_date', 'gender', 'contact_phone', 'institution');
             
@@ -96,7 +99,7 @@ class Patients extends CI_Controller
             //$crud->fields('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'birth_date', 'gender', 'contact_phone');
             
             //$crud->add_fields('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'birth_date', 'gender', 'contact_phone');
-            //$crud->edit_fields('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'birth_date', 'gender', 'contact_phone');
+            $crud->edit_fields('type_id', 'id_number', 'first_name', 'middle_name', 'last_name', 'second_last_name', 'birth_date', 'gender', 'contact_phone');
             
             
             
