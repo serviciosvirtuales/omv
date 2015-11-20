@@ -8,13 +8,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Orientación Médica Virtual FSFB</title>
-        <link href="<?php echo base_url() ?>/includes/css/bootstrap.min.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>/includes/css/bootstrap-theme.min.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>/includes/css/basic.css" rel="stylesheet">
+        <link href="<?php echo base_url() ?>includes/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo base_url() ?>includes/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="<?php echo base_url() ?>includes/css/basic.css" rel="stylesheet">
     </head>
     <body>
-        <script src="<?php echo base_url() ?>/includes/js/jquery.min.js"></script>
-        <script src="<?php echo base_url() ?>/includes/js/bootstrap.min.js"></script>
+        <script src="<?php echo base_url() ?>includes/js/jquery.min.js"></script>
+        <script src="<?php echo base_url() ?>includes/js/bootstrap.min.js"></script>
         <div class="container">
             <div id="logoacr">
                 <img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" width="200"/>
