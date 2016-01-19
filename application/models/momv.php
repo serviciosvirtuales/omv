@@ -404,41 +404,23 @@ class Momv extends CI_Model
         $this->db->trans_complete();
     }
     
-    function email_evento($registrado_por){
-        $this->db->trans_start();
-
-        $query = $this->db->select('email')
-                ->where('id', $registrado_por)
-                ->get('users');
-
-        if ($query->num_rows() > 0) 
-        {
-            $row = $query->row(); 
-            $this->db->trans_complete();            
-            return $row->email;
-        } 
-        else 
-        {
-            $this->db->trans_complete();
-            return FALSE;
-        }
-
-        $this->db->trans_complete();
-    }
-    
-    function email_evento_id($id){
+    function email_evento_id($id){ //recibo el id del evento
         $this->db->trans_start();
 
         $query = $this->db->select('registrado_por')
                 ->where('id_evento', $id)
                 ->get('evento');
-
+        
+        log_message('ERROR', 'llego a email_evento_id con id -->'.$id);
+        
         if ($query->num_rows() > 0) 
         {
             $row = $query->row(); 
             $this->db->trans_complete();    
             
-            $email = $this->email_evento($row->registrado_por);
+            $email = $this->email_evento($row->registrado_por); //llega el nombre de quien registra
+            log_message('ERROR', 'se captura el correo -->'.$email);
+            
             return $email;
         } 
         else 
@@ -450,10 +432,44 @@ class Momv extends CI_Model
         $this->db->trans_complete();
     }
     
+    function email_evento($registrado_por){
+        $this->db->trans_start();
+        
+        log_message('ERROR', 'recibo el registrado por -->'.$registrado_por); //aqui esta llegando el nombre...
+        
+        $query = $this->db->select('email')
+                ->where('id', $registrado_por)
+                ->get('users');
+
+        if ($query->num_rows() > 0) 
+        {
+            $row = $query->row(); 
+            $this->db->trans_complete(); 
+            
+            log_message('ERROR', 'se consulta el correo final para enviar -->'.$row);
+            
+            return $row->email;
+        } 
+        else 
+        {
+            $this->db->trans_complete();
+            
+            log_message('ERROR', 'UPS no se encontro el correo...');
+            
+            return FALSE;
+        }
+
+        $this->db->trans_complete();
+    }
+    
+    
+    
     function emailEspecialistas()
     {
         $this->db->trans_start();
-
+        
+        //busca los correos registrados en la pestaña administrativa y les envia el correo avisando de un nuevo evento.
+        
         $query = $this->db->select('email')                
                 ->get('configemail');
 
@@ -461,6 +477,34 @@ class Momv extends CI_Model
         {            
             $this->db->trans_complete();            
             return $query;
+        } 
+        else 
+        {
+            $this->db->trans_complete();
+            return FALSE;
+        }
+
+        $this->db->trans_complete();
+    }
+    
+     function email_conferencia($id){ //recibo el id del evento
+        $this->db->trans_start();
+
+        $query = $this->db->select('email_user') //busco el email del user que registro el evento.
+                ->where('id_evento', $id)
+                ->get('evento');
+        
+        log_message('ERROR', 'llego a email_evento_id con id -->'.$id);
+        
+        if ($query->num_rows() > 0) 
+        {
+            $row = $query->row(); 
+            $this->db->trans_complete();    
+            
+            //$email = $this->email_evento($row->registrado_por); //llega el nombre de quien registra
+            log_message('ERROR', 'email_conferencia envio link a correo -->'.$email);
+            
+            return $row->email_user;
         } 
         else 
         {

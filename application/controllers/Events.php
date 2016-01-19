@@ -187,7 +187,7 @@ class Events extends CI_Controller
             //$email = 'dt@fsfb.edu.co';
             //$respuesta_e = $post_array['respuesta'];
             //configuracion para gmail
-            /*
+            
             $configGmail = array(
                 'protocol' => 'smtp',
                 'smtp_host' => 'ssl://smtp.gmail.com',
@@ -197,7 +197,7 @@ class Events extends CI_Controller
                 'mailtype' => 'html',
                 'charset' => 'utf-8',
                 'newline' => "\r\n");
-             */
+            /* 
             $configGmail = array(
                 'protocol' => 'smtp',
                 'smtp_host' => 'ssl://smtp.mailgun.org',
@@ -207,6 +207,8 @@ class Events extends CI_Controller
                 'mailtype' => 'html',
                 'charset' => 'utf-8',
                 'newline' => "\r\n");
+             * 
+             */
 
             //cargamos la configuración para enviar con gmail
             $this->email->initialize($configGmail);
@@ -541,7 +543,7 @@ class Events extends CI_Controller
         //cargamos la libreria email de ci
         $this->load->library("email");
         
-        /*
+        
         $configGmail = array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
@@ -551,7 +553,7 @@ class Events extends CI_Controller
             'mailtype' => 'html',
             'charset' => 'utf-8',
             'newline' => "\r\n");
-         */
+         /*
         $configGmail = array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.mailgun.org',
@@ -561,6 +563,8 @@ class Events extends CI_Controller
             'mailtype' => 'html',
             'charset' => 'utf-8',
             'newline' => "\r\n");
+          * 
+          */
         
         //cargamos la configuración para enviar con gmail
         $this->email->initialize($configGmail);
@@ -681,6 +685,106 @@ class Events extends CI_Controller
         //log_message('error', 'error de correo '.$errores );
         //Echo "Correo Enviado Exitosamente";
         return TRUE;    
+    }
+    
+    function sendmail_vc($id)//correo de invitacion de videoconferencia
+    {
+        
+        $link = 'https://appear.in/omvfsfb/'.$id;
+        log_message('ERROR', 'LLEGA link y id '.$link.'-->'.$id);
+        
+        $email = $this->momv->email_evento_id($id);
+        log_message('ERROR', 'se va a enviar correo con link a--> '.$email);
+        //cargamos la libreria email de ci
+        $this->load->library("email");
+                
+        $configGmail = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'desarrollos@fsfb.edu.co',
+            'smtp_pass' => 'admfsfb2008',
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n");
+        
+        //cargamos la configuración para enviar con gmail
+        $this->email->initialize($configGmail);
+
+        $this->email->from('OMV');
+        $this->email->to($email);
+        //el tema y contenido del correo varia segun aseguradora
+        /*
+         * Con el id del evento miro el id de la institucion educativa
+         * con el id de la institucion educativa, valido al aseguradora
+         */
+        //$mailAseguradora = $this->momv->valida_Aseguradora_mail($id);
+        
+              
+            $this->email->subject('Video-Conferencia OMV - Link');
+            $this->email->message('<body style="margin:0; padding: 0; border:0;">
+            <table class="wrapper" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family: Helvetica, Arial, sans-serif; font-size: 90%; color: #555;">
+                    <tr>
+			<td align="center">
+				<table class="content" cellpadding="0" cellspacing="0" border="0" width="600">
+					<tr><td width="100%" bgcolor="#042473">
+						<table cellpadding="20">
+							<tr>
+								<td width="100%" bgcolor="#042473">
+									<img src="http://104.154.71.126/fsfbedu/img/logo_fsfb_bw.png" width="200" style="display:block;">
+								</td>
+							</tr>
+						</table>
+					</td></tr>
+					<tr>
+						<td>
+							<img src="http://173.192.217.154/omv/includes/img/banner3.jpg" style="display:block;">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h1>Ya puede acceder a la video-conferencia</h1>
+							<br />
+							<p>por favor ingrese en el siguiente link para iniciar la videoconferencia con el especialista</p>
+                                                        <a href="'.$link.' target="_blank">Haga clic aquí </a>
+							<p>Si tiene más preguntas, puede comunicarse con Servicios Virtuales al correo electrónico <a href="mailto:servicios.virtuales@fsfb.edu.co">servicios.virtuales@fsfb.edu.co</a> o llamando al teléfono (1) 6030303 extensión 5724.</p>
+							<br />
+							<p><strong>El Equipo de Servicios Virtuales</strong><br />Fundación Santa Fe de Bogotá</p><br />
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size:70%">Todos los derechos reservados, Fundación Santa Fe de Bogotá. 
+							Evite imprimir, piense en su compromiso con el medio ambiente.</td>
+					</tr>
+				</table>
+			</td>
+                    </tr>
+                </table>
+            </body>');
+        
+
+        //$this->email->print_debugger();
+
+        $this->email->send();
+
+        if (!$this->email->send())
+        {
+            //var_dump($this->email->print_debugger());
+            log_message('ERROR', ' No Envió correo vc --> ' . $email);
+        } 
+        else
+        {
+            log_message('ERROR', 'Envió correo vc --> ' . $email);
+            return TRUE; 
+        }
+
+        //con esto podemos ver el resultado
+        //var_dump($this->email->print_debugger());
+        //log_message('error', 'error de correo '.$errores );
+        //Echo "Correo Enviado Exitosamente";
+        return TRUE;    
+        
+        
     }
     
 }

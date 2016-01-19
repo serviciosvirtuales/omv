@@ -42,4 +42,25 @@
         ?>
         
     </div>    
+    <div class="col-xs-12 col-sm-11 col-md-11"><a href="https://appear.in/omvfsfb/<?php echo $this->uri->segment(3);?>" target="_blank" class="btn btn-danger btn-large" onclick="vc()">Iniciar video-conferencia</a><br><br>
+    </div>
 </div>
+<script type= 'text/javascript'>
+
+  
+    function vc(){
+        <?php
+        //log_message('ERROR', 'aqui se supone que envio el correo de la VC');
+        //$link = 'https://appear.in/omvfsfb/'.$this->uri->segment(3);
+        $id = $this->uri->segment(3);        
+        //log_message('ERROR', 'link ->'.$link.' id ->'.$id);  
+        ?>
+    $.ajax({        
+        url:'<?php echo site_url('Events/sendmail_vc/'.$id);?>',
+        complete: function (response) {
+          $('#output').html(response.true);
+      }
+    }); 
+    }
+
+</script>

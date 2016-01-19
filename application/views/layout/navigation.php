@@ -74,22 +74,30 @@
                     /*
                      * A continuacion el dropdown para administrar
                      */
+                    
                     if($page=='Aseguradoras'||$page=='Personas'||$page=='Institucion Educativa'||$page=='Correos Especialistas'){ //Daniel se quejo por 2 semanas Correos Especialistas
                     echo '<li class="dropdown active">';
                     }else{
                         echo '<li class="dropdown">';
                     }
                             ?>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrar <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
                         <?php
-                            if ($this->ion_auth->is_admin())
-                            {
+                        if ($this->ion_auth->is_admin())
+                            {echo ' 
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administrar <span class="caret"></span></a>
+                            
+                        <ul class="dropdown-menu" role="menu">';
+                        
+                            
                                 echo'<li><a href="'. site_url('Aseguradora').'">Aseguradoras</a></li>';
                                 echo '<li><a href="'.site_url("personas").'">Usuarios</a></li>';
                                 echo '<li><a href="'.site_url("institucion").'">Instituciones</a></li>';
                                 echo'<li><a href="'. site_url('ConfigEmail').'">Configurar Correos</a></li>';                                
-                            }
+                            }else
+                            {
+                                echo '<ul class="dropdown-menu" role="menu">';
+                            }?>
+                    
                           ?>
                         </ul>
                     </li>

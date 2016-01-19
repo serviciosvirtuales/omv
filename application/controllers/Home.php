@@ -81,7 +81,8 @@ class Home extends CI_Controller
                 'type' => 'password',
             );
 
-            $this->_render_page('/menu', $this->data); //ajuste aqui
+            //$this->_render_page('/menu', $this->data); //ajuste aqui
+            redirect('/', 'refresh');
         }
     }
 
