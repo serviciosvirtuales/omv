@@ -11,14 +11,14 @@
                 <ul>
                     <li><span class="glyphicon glyphicon-map-marker" aria-hidden="true">&nbsp;</span>Carrera 7 No. 117-15 (Bogotá D.C. Colombia)</li>
                     <li><span class="glyphicon glyphicon-earphone" aria-hidden="true">&nbsp;</span>+(571) 6030303 ext 5724</li>
-                    <li><span class="glyphicon glyphicon-globe" aria-hidden="true">&nbsp;</span><a href="http://www.fsfb.org.co/">www.fsfb.org.co</a></li>
+                    <li><span class="glyphicon glyphicon-globe" aria-hidden="true">&nbsp;</span><a href="http://www.fsfb.org.co/">www.fsfb.org.co</a> | <a href="http://www.fsfb.edu.co/">www.fsfb.edu.co</a></li>
                     <li><span class="glyphicon glyphicon-envelope" aria-hidden="true">&nbsp;</span><a href="mailto:telemedicina@fsfb.edu.co">telemedicina@fsfb.edu.co</a></li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="row version-notes">
-        <p>Servicios Virtuales - Fundación Santa Fe de Bogotá - Versión 1.55 (2016)
+        <p>Servicios Virtuales - Fundación Santa Fe de Bogotá - Versión 1.56 (2016)
         </p>
     </div>
 </body>
@@ -27,6 +27,7 @@
 /*
  *  Fecha       -       Nombre          -   DESCRIPCION:
  * 
+ * 20-01-2016   -   Andres C. Rojas     -   Se agrega manual de usuario y se asocia al menu recursos. se sube version.
  * 20-01-2016   -   Andres C. Rojas     -   Se crea la version 1.55 de acuerdo al numero de comits que se llevaban. se sube luego 
  *                                          de realizar las pruebas funcionales de los correos. registrar, conferencia y respuesta.
  * 

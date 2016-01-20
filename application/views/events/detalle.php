@@ -83,19 +83,22 @@
                                     }
                                 echo '</ul></p>';
                             }//if de adjuntos
-                            echo ' 
-                            <label>Clasificación: CIE10</label>';
-                            /*
-                            //$data = str_replace(',','","',$value->cie10);
-                            //log_message('ERROR', 'reemplazando ACR '.$data);
-                            $query=$this->db->select("cie10_descripcion")->from('cie10')->where_in('cie10_cie2',$value->cie10)->get();
-                            
-                            foreach ($query->result() as $cie10)
+                            if ($this->ion_auth->is_admin())
                             {
-                                echo '<p>'.$cie10->cie10_descripcion.'</p>';
+                                echo ' 
+                                <label>Clasificación: CIE10</label>';
+                                /*
+                                //$data = str_replace(',','","',$value->cie10);
+                                //log_message('ERROR', 'reemplazando ACR '.$data);
+                                $query=$this->db->select("cie10_descripcion")->from('cie10')->where_in('cie10_cie2',$value->cie10)->get();
+
+                                foreach ($query->result() as $cie10)
+                                {
+                                    echo '<p>'.$cie10->cie10_descripcion.'</p>';
+                                }
+                                */
+                                 echo '<p>'.$value->cie10.'</p>';
                             }
-                            */
-                             echo '<p>'.$value->cie10.'</p>';
                             
                         echo '
                             <label>Respuesta: </label>
