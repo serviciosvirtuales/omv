@@ -41,7 +41,7 @@
         }
         ?>
         
-    </div>    
+    </div><br><br>    
     <div class="col-xs-12 col-sm-11 col-md-11"><a href="https://appear.in/omvfsfb/<?php echo $this->uri->segment(3);?>" target="_blank" class="btn btn-danger btn-large" onclick="vc()">Iniciar video-conferencia</a><br><br>
     </div>
 </div>
