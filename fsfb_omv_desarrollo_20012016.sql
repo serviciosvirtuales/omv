@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 173.192.217.154.ACMI-ESALUD
-Source Server Version : 50173
-Source Host           : 173.192.217.154:3306
-Source Database       : fsfbedu_omv
+Source Server         : xamp local
+Source Server Version : 50625
+Source Host           : localhost:3306
+Source Database       : fsfb_omv
 
 Target Server Type    : MYSQL
-Target Server Version : 50173
+Target Server Version : 50625
 File Encoding         : 65001
 
-Date: 2015-11-09 16:49:41
+Date: 2016-01-20 09:58:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -12502,15 +12502,20 @@ CREATE TABLE `evento` (
   `adjunto3` varchar(256) DEFAULT NULL,
   `adjunto4` varchar(256) DEFAULT NULL,
   `adjunto5` varchar(256) DEFAULT NULL,
+  `email_user` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id_evento`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of evento
 -- ----------------------------
-INSERT INTO `evento` VALUES ('1', '83040906648', '<p>\r\n	Primer evento de prueba</p>\r\n', '2015-11-06 11:29:38', 'Fundación Santa Fe', 'Super Administrador', 'Finalizado', null, null, null, null, null);
-INSERT INTO `evento` VALUES ('2', '83040906648', '<p>\r\n	Un evento.</p>\r\n', '2015-11-06 16:28:28', 'Fundación Santa Fe', 'Daniel Camilo Ramirez', 'Finalizado', null, null, null, null, null);
-INSERT INTO `evento` VALUES ('3', '83040906648', '<p>\r\n	Otro evento</p>\r\n', '2015-11-06 16:32:23', 'Fundación Santa Fe', 'Daniel Camilo Ramirez', 'Recibido', null, null, null, null, null);
+INSERT INTO `evento` VALUES ('1', '83040906648', '<p>\r\n	Primer evento de prueba</p>\r\n', '2015-11-06 11:29:38', 'Fundación Santa Fe', 'Super Administrador', 'Finalizado', null, null, null, null, null, null);
+INSERT INTO `evento` VALUES ('2', '83040906648', '<p>\r\n	Un evento.</p>\r\n', '2015-11-06 16:28:28', 'Fundación Santa Fe', 'Daniel Camilo Ramirez', 'Finalizado', null, null, null, null, null, null);
+INSERT INTO `evento` VALUES ('3', '83040906648', '<p>\r\n	Otro evento</p>\r\n', '2015-11-06 16:32:23', 'Fundación Santa Fe', 'Daniel Camilo Ramirez', 'Recibido', null, null, null, null, null, null);
+INSERT INTO `evento` VALUES ('4', '1023654789', '<p>\r\n	pruebas</p>\r\n', '2015-11-12 09:38:52', '1', 'Super Administrador', 'Recibido', null, null, null, null, null, null);
+INSERT INTO `evento` VALUES ('5', '1023654789', '<p>\r\n	mas pruebas</p>\r\n', '2015-11-12 09:41:58', '1', 'Super Administrador', 'Recibido', null, null, null, null, null, null);
+INSERT INTO `evento` VALUES ('6', '9654125', '<p>\r\n	pruebas para correo</p>\r\n', '2016-01-20 09:18:33', '2', 'colegio 1 apellido 2', 'Recibido', null, null, null, null, null, 'correo3@mail.com');
+INSERT INTO `evento` VALUES ('7', '9654125', '<p>\r\n	pruebas correo</p>\r\n', '2016-01-20 09:20:27', '2', 'colegio 1 apellido 2', 'Recibido', null, null, null, null, null, 'correo3@mail.com');
 
 -- ----------------------------
 -- Table structure for groups
@@ -12536,6 +12541,7 @@ INSERT INTO `groups` VALUES ('4', 'members', 'General User');
 -- ----------------------------
 DROP TABLE IF EXISTS `institucion_educativa`;
 CREATE TABLE `institucion_educativa` (
+  `id` int(50) NOT NULL AUTO_INCREMENT,
   `id_institucion` int(50) NOT NULL,
   `nombre_institucion` varchar(256) CHARACTER SET utf8 NOT NULL,
   `poliza_institucion` varchar(256) CHARACTER SET utf8 NOT NULL,
@@ -12543,14 +12549,14 @@ CREATE TABLE `institucion_educativa` (
   `registrado_por` varchar(256) CHARACTER SET utf8 NOT NULL,
   `estado` varchar(256) CHARACTER SET utf8 NOT NULL DEFAULT 'Activa',
   `aseguradora` int(50) DEFAULT NULL,
-  PRIMARY KEY (`id_institucion`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of institucion_educativa
 -- ----------------------------
-INSERT INTO `institucion_educativa` VALUES ('100010001', 'Fundación Santa Fe', '200020001', '2015-11-06 11:25:41', '1', 'Activa', '1');
-INSERT INTO `institucion_educativa` VALUES ('100010002', 'Colegio Santa Fe (Pruebas)', '200020002', '2015-11-06 11:26:11', '1', 'Activa', '1');
+INSERT INTO `institucion_educativa` VALUES ('1', '100010001', 'Fundación Santa Fe', '200020001', '2015-11-06 11:25:41', '1', 'Activa', '1');
+INSERT INTO `institucion_educativa` VALUES ('2', '100010002', 'Colegio Santa Fe (Pruebas)', '200020002', '2015-11-06 11:26:11', '1', 'Activa', '1');
 
 -- ----------------------------
 -- Table structure for login_attempts
@@ -12584,15 +12590,20 @@ CREATE TABLE `patients` (
   `gender` varchar(25) NOT NULL,
   `contact_phone` varchar(45) NOT NULL,
   `institution` varchar(45) NOT NULL,
+  `institucion_registra` int(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `id_number_UNIQUE` (`id_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of patients
 -- ----------------------------
-INSERT INTO `patients` VALUES ('1', 'TI', '83040906648', 'Andres', 'Paciente', 'Acosta', 'Pruebas', '1985-11-06', 'Masculino', '6000000', 'Fundación Santa Fe');
+INSERT INTO `patients` VALUES ('1', 'TI', '83040906648', 'Andres', 'Paciente', 'Acosta', 'Pruebas', '1985-11-06', 'Masculino', '6000000', 'Fundación Santa Fe', '1');
+INSERT INTO `patients` VALUES ('3', 'NUIP', '9875264', 'juan', null, 'pruebas', 'xD', '2015-11-02', 'Masculino', '6030303', 'Fundación Santa Fe', '1');
+INSERT INTO `patients` VALUES ('4', 'TI', '1023654789', 'juan', null, 'pruebas', 'segundas', '2015-11-02', 'Masculino', '6030303', 'Fundación Santa Fe', '1');
+INSERT INTO `patients` VALUES ('5', 'TI', '9654125', 'pruebas', null, 'codigo', null, '2015-11-03', 'Femenino', '6030303', 'Colegio Santa Fe (Pruebas)', '2');
+INSERT INTO `patients` VALUES ('6', 'TI', '1234567890', 'Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido', '1991-05-21', 'Masculino', '7654321', 'Colegio Santa Fe (Pruebas)', '2');
 
 -- ----------------------------
 -- Table structure for respuesta
@@ -12641,22 +12652,22 @@ CREATE TABLE `users` (
   `last_name` varchar(50) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `id_institucion_ed` varchar(256) NOT NULL DEFAULT 'FSFB',
+  `id_institucion_ed` int(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', '127.0.0.1', '', '$2y$08$TDy0JWXXq/ZKoKnPaSRiSu5ck0ECldZEMcfAbdPkEePzDKIZ5hP7e', '', 'andres.rojas@fsfb.edu.co', '', null, null, null, '1268889823', '1447096254', '1', 'Super', 'Administrador', 'ADMIN', '60303030', 'Fundación Santa Fe');
-INSERT INTO `users` VALUES ('2', '::1', '', '$2y$08$6vNvIq3E0YukXNzbob.l7uoCENcUXwXeyESNWzvdgjV.PDwqoYL4.', null, 'correo3@mail.com', null, null, null, null, '1441641286', '1445634781', '1', 'colegio 1', 'apellido 2', null, '6030303', 'Colegio Santa Fe (Pruebas)');
-INSERT INTO `users` VALUES ('3', '200.74.144.236', '', '$2y$08$nd/nCxT0uy98uQv7oBu2h.0l6dheUBW.ujw9a0cSDiyzhShNBaV2W', null, 'daniel.ramirez@fsfb.edu.co', null, null, null, null, '1445273092', '1446845712', '1', 'Daniel Camilo', 'Ramirez', null, '6030303 5724', 'Fundación Santa Fe');
-INSERT INTO `users` VALUES ('4', '200.74.144.236', '', '$2y$08$qrA4PJPLohMDGFmdW6VhhORxIBL97k5siZ2u7yjUU9cD0Abkst3LG', null, 'andresrojas686@gmail.com', null, null, null, null, '1445371133', '1445439951', '1', 'andres', 'rojas', null, '6030303', 'Colegio Santa Fe (Pruebas)');
-INSERT INTO `users` VALUES ('10', '200.74.144.236', '', '$2y$08$RihtH9YyI3mfeoyTIGT7yOyjxu9XwbccTyZ9Trd7Tp5pITzkJswOi', null, 'fernando.diaz@fsfb.edu.co', null, null, null, null, '1445528417', '1445543720', '1', 'Fernando', 'Díaz', null, '6030303', 'Fundación Santa Fe');
-INSERT INTO `users` VALUES ('11', '200.74.144.236', '', '$2y$08$EigBt62tCbs.SzHFmZpx8OVULVVNaPocX/nq5OvY4Hb8YxBN87k8K', null, 'ing.andres.rojas@outlook.es', null, null, null, null, '1445528535', null, '1', 'juan', 'perez', null, '6030303', 'Colegio Santa Fe (Pruebas)');
-INSERT INTO `users` VALUES ('13', '177.255.170.40', '', '$2y$08$UD5V5.0vLg.2yYxKQ.UBruZyxXz8FsSw1/duO8qU9rZKiodYJJWci', null, 'daniel.camilo.ramirez@gmail.com', null, null, null, null, '1446043791', '1446044800', '1', 'Mi', 'Usuario', null, '3015692976', 'Colegio Santa Fe (Pruebas)');
-INSERT INTO `users` VALUES ('14', '200.74.144.236', 'medico@fsfb.edu.co', '$2y$08$GZIfZkXWcCH9txFi51Q4dOt2tsBfQDBxPHHxwaaPPh7n22CP.kzc.', null, 'medico@fsfb.edu.co', null, null, null, null, '1446827310', null, '1', 'Medico', 'Especialista', null, '6030303', 'Fundación Santa Fe');
-INSERT INTO `users` VALUES ('15', '200.74.144.236', '', '$2y$08$VuoFIumE5DXShobvvYv4I.c/HJD3x2RWN3v/77eSFVMGTtBAPQueG', null, 'medico2@fsfb.edu.co', null, null, null, null, '1446828095', null, '1', 'medico', 'segundo', null, '6030303', 'Fundación Santa Fe');
+INSERT INTO `users` VALUES ('1', '127.0.0.1', 'andres.rojas@fsfb.edu.co', '$2y$08$TDy0JWXXq/ZKoKnPaSRiSu5ck0ECldZEMcfAbdPkEePzDKIZ5hP7e', '', 'andres.rojas@fsfb.edu.co', '', null, null, null, '1268889823', '1453299674', '1', 'Super', 'Administrador', 'ADMIN', '60303030', '1');
+INSERT INTO `users` VALUES ('2', '::1', 'correo3@mail.com', '$2y$08$6vNvIq3E0YukXNzbob.l7uoCENcUXwXeyESNWzvdgjV.PDwqoYL4.', null, 'correo3@mail.com', null, null, null, null, '1441641286', '1453301093', '1', 'colegio 1', 'apellido 2', null, '6030303', '2');
+INSERT INTO `users` VALUES ('3', '200.74.144.236', 'daniel.ramirez@fsfb.edu.co', '$2y$08$nd/nCxT0uy98uQv7oBu2h.0l6dheUBW.ujw9a0cSDiyzhShNBaV2W', null, 'daniel.ramirez@fsfb.edu.co', null, null, null, null, '1445273092', '1446845712', '1', 'Daniel Camilo', 'Ramirez', null, '6030303 5724', '1');
+INSERT INTO `users` VALUES ('4', '200.74.144.236', 'andresrojas686@gmail.com', '$2y$08$qrA4PJPLohMDGFmdW6VhhORxIBL97k5siZ2u7yjUU9cD0Abkst3LG', null, 'andresrojas686@gmail.com', null, null, null, null, '1445371133', '1453232851', '1', 'andres', 'rojas', null, '6030303', '2');
+INSERT INTO `users` VALUES ('10', '200.74.144.236', 'fernando.diaz@fsfb.edu.co', '$2y$08$RihtH9YyI3mfeoyTIGT7yOyjxu9XwbccTyZ9Trd7Tp5pITzkJswOi', null, 'fernando.diaz@fsfb.edu.co', null, null, null, null, '1445528417', '1445543720', '1', 'Fernando', 'Díaz', null, '6030303', '1');
+INSERT INTO `users` VALUES ('11', '200.74.144.236', 'ing.andres.rojas@outlook.es', '$2y$08$EigBt62tCbs.SzHFmZpx8OVULVVNaPocX/nq5OvY4Hb8YxBN87k8K', null, 'ing.andres.rojas@outlook.es', null, null, null, null, '1445528535', null, '1', 'juan', 'perez', null, '6030303', '2');
+INSERT INTO `users` VALUES ('13', '177.255.170.40', 'daniel.camilo.ramirez@gmail.com', '$2y$08$UD5V5.0vLg.2yYxKQ.UBruZyxXz8FsSw1/duO8qU9rZKiodYJJWci', null, 'daniel.camilo.ramirez@gmail.com', null, null, null, null, '1446043791', '1446044800', '1', 'Mi', 'Usuario', null, '3015692976', '1');
+INSERT INTO `users` VALUES ('14', '200.74.144.236', 'medico@fsfb.edu.co', '$2y$08$GZIfZkXWcCH9txFi51Q4dOt2tsBfQDBxPHHxwaaPPh7n22CP.kzc.', null, 'medico@fsfb.edu.co', null, null, null, null, '1446827310', null, '1', 'Medico', 'Especialista', null, '6030303', '2');
+INSERT INTO `users` VALUES ('15', '200.74.144.236', 'medico2@fsfb.edu.co', '$2y$08$VuoFIumE5DXShobvvYv4I.c/HJD3x2RWN3v/77eSFVMGTtBAPQueG', null, 'medico2@fsfb.edu.co', null, null, null, null, '1446828095', null, '1', 'medico', 'segundo', null, '6030303', '1');
 
 -- ----------------------------
 -- Table structure for users_groups

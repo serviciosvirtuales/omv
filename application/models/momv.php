@@ -494,7 +494,7 @@ class Momv extends CI_Model
                 ->where('id_evento', $id)
                 ->get('evento');
         
-        log_message('ERROR', 'llego a email_evento_id con id -->'.$id);
+        log_message('ERROR', 'llego a email_conferencia con id -->'.$id);
         
         if ($query->num_rows() > 0) 
         {
@@ -509,6 +509,7 @@ class Momv extends CI_Model
         else 
         {
             $this->db->trans_complete();
+            log_message('ERROR', 'momv->email_conferencia eno encuentra correo ');
             return FALSE;
         }
 

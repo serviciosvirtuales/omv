@@ -18,9 +18,16 @@
         </div>
     </div>
     <div class="row version-notes">
-        <p>Servicios Virtuales - Fundación Santa Fe de Bogotá - Versión 1.<?php echo PLATFORM_VERSION ?> (2015)
-        <br /><?php echo "Microtime " . microtime(); ?>
+        <p>Servicios Virtuales - Fundación Santa Fe de Bogotá - Versión 1.55 (2016)
         </p>
     </div>
 </body>
 </html>
+<?php
+/*
+ *  Fecha       -       Nombre          -   DESCRIPCION:
+ * 
+ * 20-01-2016   -   Andres C. Rojas     -   Se crea la version 1.55 de acuerdo al numero de comits que se llevaban. se sube luego 
+ *                                          de realizar las pruebas funcionales de los correos. registrar, conferencia y respuesta.
+ * 
+ */

@@ -86,6 +86,7 @@ class Events extends CI_Controller
             $id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
 
             $crud->field_type('institucion_edu_id', 'hidden', $id_edu_ins);
+            $crud->field_type('email_user', 'hidden', $user->email);
             
             //$crud->field_type('institucion_edu_id', 'dropdown', $this->momv->instituciones2());
             
@@ -95,7 +96,7 @@ class Events extends CI_Controller
             // Campos obligatorios
             $crud->required_fields('descripcion', 'paciente_id');
 
-            $crud->add_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
+            $crud->add_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5', 'email_user'); // con add establecemos los campos para el formulario
             $crud->edit_fields('paciente_id', 'descripcion', 'registrado_por', 'institucion_edu_id', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
 
             if (!$this->ion_auth->is_admin()) // si no es admin no puede eliminar y consulta sus pacientes
@@ -264,10 +265,12 @@ class Events extends CI_Controller
             {
                 //var_dump($this->email->print_debugger());
                 log_message('ERROR', ' No Envió correo con respuesta a --> ' .$correo->email);
+                return TRUE;
             } 
             else
             {
                 log_message('ERROR', 'Envió correo a --> ' .$correo->email);
+                return TRUE;
             }
 
             //con esto podemos ver el resultado
@@ -539,7 +542,7 @@ class Events extends CI_Controller
     function mail_newRespuesta($id){ //Recibimos el id del evento que se responde
                    
         //debemos consultar el correo de la persona que realizo la consulta para enviar el correo de respuesta
-        $email = $this->momv->email_evento_id($id);
+        $email = $this->momv->email_conferencia($id);
         //cargamos la libreria email de ci
         $this->load->library("email");
         
@@ -693,7 +696,7 @@ class Events extends CI_Controller
         $link = 'https://appear.in/omvfsfb/'.$id;
         log_message('ERROR', 'LLEGA link y id '.$link.'-->'.$id);
         
-        $email = $this->momv->email_evento_id($id);
+        $email = $this->momv->email_conferencia($id);
         log_message('ERROR', 'se va a enviar correo con link a--> '.$email);
         //cargamos la libreria email de ci
         $this->load->library("email");
@@ -746,7 +749,7 @@ class Events extends CI_Controller
 							<h1>Ya puede acceder a la video-conferencia</h1>
 							<br />
 							<p>por favor ingrese en el siguiente link para iniciar la videoconferencia con el especialista</p>
-                                                        <a href="'.$link.' target="_blank">Haga clic aquí </a>
+                                                        <a href="'.$link.'" target="_blank">Haga clic aquí </a>
 							<p>Si tiene más preguntas, puede comunicarse con Servicios Virtuales al correo electrónico <a href="mailto:servicios.virtuales@fsfb.edu.co">servicios.virtuales@fsfb.edu.co</a> o llamando al teléfono (1) 6030303 extensión 5724.</p>
 							<br />
 							<p><strong>El Equipo de Servicios Virtuales</strong><br />Fundación Santa Fe de Bogotá</p><br />
