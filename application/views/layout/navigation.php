@@ -92,7 +92,8 @@
                                 echo'<li><a href="'. site_url('Aseguradora').'">Aseguradoras</a></li>';
                                 echo '<li><a href="'.site_url("personas").'">Usuarios</a></li>';
                                 echo '<li><a href="'.site_url("institucion").'">Instituciones</a></li>';
-                                echo'<li><a href="'. site_url('ConfigEmail').'">Configurar Correos</a></li>';                                
+                                echo'<li><a href="'. site_url('ConfigEmail').'">Configurar Correos</a></li>';
+                                
                             }else
                             {
                                 echo '<ul class="dropdown-menu" role="menu">';
@@ -104,7 +105,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Recursos <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                         <?php
-                        echo '<li><a href="'. site_url("assets/uploads/ManualOMV.pdf").'" target="_blank">Cómo Usar OMV</a></li>';    
+                        echo '<li><a href="'. site_url("assets/uploads/ManualOMV.pdf").'" target="_blank">Cómo Usar OMV</a></li>'; 
+                        echo'<li><a href="'. site_url('contrasena').'">Cambiar Contraseña</a></li>';
                         ?>
                         </ul>
                     </li>                    

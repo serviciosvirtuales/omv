@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="row version-notes">
-        <p>Servicios Virtuales - Fundación Santa Fe de Bogotá - Versión 1.56 (2016)
+        <p>Servicios Virtuales - Fundación Santa Fe de Bogotá - Versión 1.57 (2016)
         </p>
     </div>
 </body>
@@ -27,6 +27,7 @@
 /*
  *  Fecha       -       Nombre          -   DESCRIPCION:
  * 
+ * 22-02-2016   -   Andres C. Rojas     -   Se agrega opcion de cambio de contraseña en el menu recursos->cambiar contraseña
  * 20-01-2016   -   Andres C. Rojas     -   Se agrega manual de usuario y se asocia al menu recursos. se sube version.
  * 20-01-2016   -   Andres C. Rojas     -   Se crea la version 1.55 de acuerdo al numero de comits que se llevaban. se sube luego 
  *                                          de realizar las pruebas funcionales de los correos. registrar, conferencia y respuesta.
