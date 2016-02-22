@@ -96,8 +96,7 @@
                             }else
                             {
                                 echo '<ul class="dropdown-menu" role="menu">';
-                            }?>
-                    
+                            }                    
                           ?>
                         </ul>
                     </li>
@@ -105,7 +104,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Recursos <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                         <?php
-                        echo '<li><a href="'. site_url("assets/uploads/ManualOMV.pdf").'" target="_blank">Como Usar OMV</a></li>';    
+                        echo '<li><a href="'. site_url("assets/uploads/ManualOMV.pdf").'" target="_blank">Cómo Usar OMV</a></li>';    
                         ?>
                         </ul>
                     </li>                    
