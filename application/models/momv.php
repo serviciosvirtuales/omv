@@ -379,7 +379,7 @@ class Momv extends CI_Model
         */
         $this->db->select('e.id_evento, e.descripcion, e.fecha_evento, e.institucion_edu_id, e.estado,
                             e.adjunto1 as eadj1, e.adjunto2 as eadj2, e.adjunto3 as eadj3, e.adjunto4 as eadj4, e.adjunto5 as eadj5,
-                            r.respuesta, r.cie10, r.fecha_respuesta, r.registrado_por,
+                            r.respuesta, r.cie10, r.fecha_respuesta, r.registrado_por, r.clasificacion,
                             r.adjunto1 as radj1, r.adjunto2 as radj2, r.adjunto3 as radj3, r.adjunto4 as radj4, r.adjunto5 as radj5, p.*')
                 ->from('evento e, respuesta r, patients p')
                 ->where('paciente_id = p.id_number')

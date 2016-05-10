@@ -20,8 +20,9 @@
              */
             echo '<strong>Edad: </strong>'.$years.' Años</br>';
             //echo '<strong>Edad: </strong>'.$years.' Años, '.$months.' Meses, '.$days.' Días</br>';
-            echo '<strong>Género:</strong> '.$consulta->gender.'</br></br>';
+            echo '<strong>Género:</strong> '.$consulta->gender.'</br>';
             echo '<strong>Consulta:</strong> '.$consulta->descripcion.'</br>';
+            echo '<strong>Quién Pregunta:</strong> '.$consulta->registrado_por.'</br>';
             
             if($consulta->adjunto1){
             echo '<a href="'.site_url('assets/uploads/files/evento').'/'.$consulta->adjunto1.'" target ="_blank">adjunto 1</a> ';

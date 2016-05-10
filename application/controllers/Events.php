@@ -427,7 +427,7 @@ class Events extends CI_Controller
         if ($this->ion_auth->in_group($group3))
         {
             //echo 'respondes evento con id ' . $id;
-            $data['evento'] = $this->momv->detalle_evento($id);
+            $data['evento'] = $this->momv->detalle_evento($id); //consulto los datos del paciente
             $data['page'] = 'Responde - Evento';
 
             $crud = new grocery_CRUD();
@@ -441,7 +441,7 @@ class Events extends CI_Controller
             $crud->set_field_upload('adjunto4','assets/uploads/files/respuesta');      
             $crud->set_field_upload('adjunto5','assets/uploads/files/respuesta');
 
-            $crud->columns('id_evento', 'respuesta', 'fecha_respuesta', 'registrado_por');
+            $crud->columns('id_evento', 'respuesta', 'fecha_respuesta', 'registrado_por','clasificacion');
 
             //$crud->add_action('alt', ruta imagen boton, '/controller/function','class -> opcional');
             //$crud->add_action('Responder', site_url('/includes/img/responder.png'), '/events/responder');
@@ -451,6 +451,7 @@ class Events extends CI_Controller
             $crud->display_as('respuesta', 'Ingrese su respuesta');
             //$crud->display_as('fecha_respuesta', 'Se Respondió el');
             $crud->display_as('cie10', 'Código CIE10');
+            $crud->display_as('clasificacion', 'Clasificación');
             $crud->display_as('adjunto1', 'Archivo Adjunto');
             $crud->display_as('adjunto2', 'Archivo Adjunto');
             $crud->display_as('adjunto3', 'Archivo Adjunto');
@@ -462,6 +463,7 @@ class Events extends CI_Controller
             $admin = $user->id; // aqui envio el id de la persona logueada q registra a la entidad. 
 
             $crud->field_type('cie10', 'multiselect', $this->momv->cie10());
+            $crud->field_type('clasificacion', 'dropdown', array('Consulta'=>'Consulta','Presentación'=>'Presentación'));
 
             //$id_edu_ins = $user->id_institucion_ed; //seleccionamos el id de la institucion educativa
 
@@ -471,10 +473,10 @@ class Events extends CI_Controller
             $crud->field_type('registrado_por', 'hidden', $admin);
 
             // Campos obligatorios
-            $crud->required_fields('respuesta');
+            $crud->required_fields('respuesta','clasificacion');
 
-            $crud->add_fields('id_evento', 'respuesta', 'registrado_por', 'cie10', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5'); // con add establecemos los campos para el formulario
-            $crud->edit_fields('respuesta', 'registrado_por', 'cie10', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5');
+            $crud->add_fields('id_evento', 'respuesta', 'registrado_por', 'cie10', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5','clasificacion'); // con add establecemos los campos para el formulario
+            $crud->edit_fields('respuesta', 'registrado_por', 'cie10', 'adjunto1', 'adjunto2', 'adjunto3', 'adjunto4', 'adjunto5','clasificacion');
 
             if (!$this->ion_auth->is_admin()) // si no es adminno puede eliminar
             {

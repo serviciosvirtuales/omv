@@ -8,6 +8,7 @@
        echo '<th style="text-align:center;">Descripción</th>';
        echo '<th style="text-align:center;">Fecha</th>';
        echo '<th style="text-align:center;">Respuesta</th>';
+       echo '<th style="text-align:center;">Clasificación</th>';
        echo '<th style="text-align:center;">Ver Más</th>';
        echo '</tr>';
         foreach ($historicos->result() as $value)
@@ -16,6 +17,7 @@
             echo '<td>'.word_limiter($value->descripcion,5).'</td>';
             echo '<td style="text-align:center;">'.$value->fecha_evento.'</td>';
             echo '<td>'.word_limiter($value->respuesta,5).'</td>';
+            echo '<td>'.$value->clasificacion.'</td>';
             //echo '<td style="text-align:center;"><a href="#/'.$value->id_evento.'" target="_blank" class="btn btn-info">Ver Más</a></td>';
             
             //se comenta la siguiente linea y el uso de modal 
